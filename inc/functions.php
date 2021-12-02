@@ -41,3 +41,12 @@ function ratingComment($listing_id)
         echo "Excillent";
     }
 }
+
+function getCities()
+{
+    include("admin/db.php");
+    $q = $con->prepare("SELECT * FROM cities");
+    $q->execute();
+    $r = $q->fetchAll(PDO::FETCH_ASSOC);
+    return $r;
+}

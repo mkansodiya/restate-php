@@ -1,6 +1,7 @@
 <?php include('inc/header.php');
 include('inc/functions.php');
 $listing_array = getListings();
+$cities_array = getCities();
 
 ?>
 <!-- header end  -->
@@ -29,21 +30,17 @@ $listing_array = getListings();
                         <div class="main-search-input-item">
                             <select data-placeholder="All Categories" class="chosen-select no-search-select">
                                 <option>All Statuses</option>
-                                <option>For Rent</option>
-                                <option>For Sale</option>
+                                <option value="rent">For Rent</option>
+                                <option value="sale">For Sale</option>
                             </select>
                         </div>
                         <div class="main-search-input-item">
                             <select data-placeholder="All Categories" class="chosen-select">
                                 <option>All Cities</option>
-                                <option>New York</option>
-                                <option>London</option>
-                                <option>Paris</option>
-                                <option>Kiev</option>
-                                <option>Moscow</option>
-                                <option>Dubai</option>
-                                <option>Rome</option>
-                                <option>Beijing</option>
+                                <?php foreach ($cities_array as $key => $value) {
+                                    echo "<option value=\"{$value['id']}\">{$value['name']}</option>";
+                                } ?>
+
                             </select>
                         </div>
                         <button class="main-search-button color-bg" onclick="window.location.href='listing.php'"> Search <i class="far fa-search"></i> </button>
@@ -102,7 +99,7 @@ $listing_array = getListings();
                             <div class="listing-item">
                                 <article class="geodir-category-listing fl-wrap">
                                     <div class="geodir-category-img fl-wrap">
-                                        <a href="listing-single.php" class="geodir-category-img_item">
+                                        <a href="listing-single.php?id=<?php echo $value['id']; ?>" class="geodir-category-img_item">
                                             <img src="images/all/1.jpg" alt="">
                                             <div class="overlay"></div>
                                         </a>
@@ -120,7 +117,7 @@ $listing_array = getListings();
                                         </div>
                                     </div>
                                     <div class="geodir-category-content fl-wrap">
-                                        <h3 class="title-sin_item"><a href="listing-single.php"><?php echo $value['title']; ?></a></h3>
+                                        <h3 class="title-sin_item"><a href="listing-single.php?id=<?php echo $value['id']; ?>"><?php echo $value['title']; ?></a></h3>
                                         <div class="geodir-category-content_price">$ <?php if ($value['type'] == 'rent') {
                                                                                             echo $value['price'] . "/ per month";
                                                                                         } else {
