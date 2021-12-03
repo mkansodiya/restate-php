@@ -2,6 +2,7 @@
 include('inc/functions.php');
 $listing_array = getListings();
 $cities_array = getCities();
+$agents_array = getAgents();
 
 ?>
 <!-- header end  -->
@@ -212,61 +213,24 @@ $cities_array = getCities();
                 <div class="half-carousel-conatiner">
                     <div class="half-carousel fl-wrap full-height">
                         <!--slick-item -->
-                        <div class="slick-item">
-                            <div class="half-carousel-item fl-wrap">
-                                <div class="bg-wrap bg-parallax-wrap-gradien">
-                                    <div class="bg" data-bg="images/bg/long/1.jpg"></div>
-                                </div>
-                                <div class="half-carousel-content">
-                                    <div class="hc-counter color-bg">26 Properties</div>
-                                    <h3><a href="listing.php">Explore NewYork</a></h3>
-                                    <p>Constant care and attention to the patients makes good record</p>
-                                </div>
-                            </div>
-                        </div>
-                        <!--slick-item end -->
-                        <!--slick-item -->
-                        <div class="slick-item">
-                            <div class="half-carousel-item fl-wrap">
-                                <div class="bg-wrap bg-parallax-wrap-gradien">
-                                    <div class="bg" data-bg="images/bg/long/1.jpg"></div>
-                                </div>
-                                <div class="half-carousel-content">
-                                    <div class="hc-counter color-bg">89 Properties</div>
-                                    <h3><a href="listing.php">Awesome London</a></h3>
-                                    <p>Constant care and attention to the patients makes good record</p>
+                        <?php foreach ($cities_array as $key => $value) {
+
+                        ?>
+                            <div class="slick-item">
+                                <div class="half-carousel-item fl-wrap">
+                                    <div class="bg-wrap bg-parallax-wrap-gradien">
+                                        <div class="bg" data-bg="<?php echo $value['image']; ?>"></div>
+                                    </div>
+                                    <div class="half-carousel-content">
+                                        <div class="hc-counter color-bg">26 Properties</div>
+                                        <h3><a href="listing.php?id=<?php echo $value['id']; ?>">Explore <?php echo $value['name']; ?></a></h3>
+                                        <p><?php echo $value['description']; ?></p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        <?php } ?>
                         <!--slick-item end -->
-                        <!--slick-item -->
-                        <div class="slick-item">
-                            <div class="half-carousel-item fl-wrap">
-                                <div class="bg-wrap bg-parallax-wrap-gradien">
-                                    <div class="bg" data-bg="images/bg/long/1.jpg"></div>
-                                </div>
-                                <div class="half-carousel-content">
-                                    <div class="hc-counter color-bg">102 Properties</div>
-                                    <h3><a href="listing.php">Find Dream in Paris</a></h3>
-                                    <p>Constant care and attention to the patients makes good record</p>
-                                </div>
-                            </div>
-                        </div>
-                        <!--slick-item end -->
-                        <!--slick-item -->
-                        <div class="slick-item">
-                            <div class="half-carousel-item fl-wrap">
-                                <div class="bg-wrap bg-parallax-wrap-gradien">
-                                    <div class="bg" data-bg="images/bg/long/1.jpg"></div>
-                                </div>
-                                <div class="half-carousel-content">
-                                    <div class="hc-counter color-bg">51 Properties</div>
-                                    <h3><a href="listing.php">Elite Houses in Dubai</a></h3>
-                                    <p>Constant care and attention to the patients makes good record</p>
-                                </div>
-                            </div>
-                        </div>
-                        <!--slick-item end -->
+
                     </div>
                 </div>
             </div>
@@ -285,45 +249,46 @@ $cities_array = getCities();
                 <div class="listing-carousel-wrapper lc_hero carousel-wrap fl-wrap">
                     <div class="listing-carousel carousel ">
                         <!-- slick-slide-item -->
-                        <div class="slick-slide-item">
-                            <!--  agent card item -->
-                            <div class="listing-item">
-                                <article class="geodir-category-listing fl-wrap">
-                                    <div class="geodir-category-img fl-wrap  agent_card">
-                                        <a href="agent-single.php" class="geodir-category-img_item">
-                                            <img src="images/agency/agent/1.jpg" alt="">
-                                            <ul class="list-single-opt_header_cat">
-                                                <li><span class="cat-opt color-bg">4 listings</span></li>
-                                            </ul>
-                                        </a>
-                                        <div class="agent-card-social fl-wrap">
-                                            <ul>
-                                                <li><a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
-                                                <li><a href="#" target="_blank"><i class="fab fa-twitter"></i></a></li>
-                                                <li><a href="#" target="_blank"><i class="fab fa-instagram"></i></a></li>
-                                            </ul>
+                        <?php foreach ($agents_array as $key => $value) {
+                        ?>
+                            <div class="slick-slide-item">
+                                <!--  agent card item -->
+                                <div class="listing-item">
+                                    <article class="geodir-category-listing fl-wrap">
+                                        <div class="geodir-category-img fl-wrap  agent_card">
+                                            <a href="agent-single.php" class="geodir-category-img_item">
+                                                <img src="<?php echo $value['image']; ?>" alt="">
+                                                <ul class="list-single-opt_header_cat">
+                                                    <li><span class="cat-opt color-bg">4 listings</span></li>
+                                                </ul>
+                                            </a>
+                                            <div class="agent-card-social fl-wrap">
+                                                <ul>
+                                                    <li><a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
+                                                    <li><a href="#" target="_blank"><i class="fab fa-twitter"></i></a></li>
+                                                    <li><a href="#" target="_blank"><i class="fab fa-instagram"></i></a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="listing-rating card-popup-rainingvis" data-starrating2="5"><span class="re_stars-title">Excellent</span></div>
                                         </div>
-                                        <div class="listing-rating card-popup-rainingvis" data-starrating2="5"><span class="re_stars-title">Excellent</span></div>
-                                    </div>
-                                    <div class="geodir-category-content fl-wrap">
-                                        <div class="card-verified tolt" data-microtip-position="left" data-tooltip="Verified"><i class="fal fa-user-check"></i></div>
-                                        <div class="agent_card-title fl-wrap">
-                                            <h4><a href="agent-single.php">Anna Lips</a></h4>
-                                            <h5><a href="agency-single.php">CondorHome RealEstate agency</a></h5>
+                                        <div class="geodir-category-content fl-wrap">
+                                            <div class="card-verified tolt" data-microtip-position="left" data-tooltip="Verified"><i class="fal fa-user-check"></i></div>
+                                            <div class="agent_card-title fl-wrap">
+                                                <h4><a href="agent-single.php?id=<?php echo $value['id']; ?>"><?php echo ucfirst($value['first_name']) . " " . $value['last_name']; ?></a></h4>
+                                                <h5><a href="agency-single.php?id=<?php echo $value['id']; ?>">CondorHome RealEstate agency</a></h5>
+                                            </div>
+                                            <p><?php echo $value['description']; ?></p>
+                                            <div class="geodir-category-footer fl-wrap">
+                                                <a href="agent-single.php" class="btn float-btn color-bg small-btn">View Profile</a>
+                                                <a href="mailto:<?php echo $value['email']; ?>" class="tolt ftr-btn" data-microtip-position="left" data-tooltip="Write Message"><i class="fal fa-envelope"></i></a>
+                                                <a href="tel:123-456-7890" class="tolt ftr-btn" data-microtip-position="left" data-tooltip="Call Now"><i class="fal fa-phone"></i></a>
+                                            </div>
                                         </div>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in pulvinar neque. Nulla finibus lobortis pulvinar. Donec a consectetur nulla.</p>
-                                        <div class="geodir-category-footer fl-wrap">
-                                            <a href="agent-single.php" class="btn float-btn color-bg small-btn">View Profile</a>
-                                            <a href="mailto:yourmail@email.com" class="tolt ftr-btn" data-microtip-position="left" data-tooltip="Write Message"><i class="fal fa-envelope"></i></a>
-                                            <a href="tel:123-456-7890" class="tolt ftr-btn" data-microtip-position="left" data-tooltip="Call Now"><i class="fal fa-phone"></i></a>
-                                        </div>
-                                    </div>
-                                </article>
+                                    </article>
+                                </div>
+                                <!--  agent card item end -->
                             </div>
-                            <!--  agent card item end -->
-                        </div>
-                        <!-- slick-slide-item end-->
-                        <!-- slick-slide-item -->
+                        <?php } ?>
                         <div class="slick-slide-item">
                             <!--  agent card item -->
                             <div class="listing-item">
@@ -364,85 +329,7 @@ $cities_array = getCities();
                         </div>
                         <!-- slick-slide-item end-->
                         <!-- slick-slide-item -->
-                        <div class="slick-slide-item">
-                            <!--  agent card item -->
-                            <div class="listing-item">
-                                <article class="geodir-category-listing fl-wrap">
-                                    <div class="geodir-category-img fl-wrap  agent_card">
-                                        <a href="agent-single.php" class="geodir-category-img_item">
-                                            <img src="images/agency/agent/1.jpg" alt="">
-                                            <ul class="list-single-opt_header_cat">
-                                                <li><span class="cat-opt color-bg">23 listings</span></li>
-                                            </ul>
-                                        </a>
-                                        <div class="agent-card-social fl-wrap">
-                                            <ul>
-                                                <li><a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
-                                                <li><a href="#" target="_blank"><i class="fab fa-twitter"></i></a></li>
-                                                <li><a href="#" target="_blank"><i class="fab fa-instagram"></i></a></li>
-                                                <li><a href="#" target="_blank"><i class="fab fa-vk"></i></a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="listing-rating card-popup-rainingvis" data-starrating2="5"><span class="re_stars-title">Excellent
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="geodir-category-content fl-wrap">
-                                        <div class="card-verified tolt" data-microtip-position="left" data-tooltip="Verified"><i class="fal fa-user-check"></i></div>
-                                        <div class="agent_card-title fl-wrap">
-                                            <h4><a href="agent-single.php">Bill Trust</a></h4>
-                                            <h5><a href="agency-single.php">Your Sweet Home agency</a></h5>
-                                        </div>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in pulvinar neque. Nulla finibus lobortis pulvinar. Donec a consectetur nulla.</p>
-                                        <div class="geodir-category-footer fl-wrap">
-                                            <a href="agent-single.php" class="btn float-btn color-bg small-btn">View Profile</a>
-                                            <a href="mailto:yourmail@email.com" class="tolt ftr-btn" data-microtip-position="left" data-tooltip="Write Message"><i class="fal fa-envelope"></i></a>
-                                            <a href="tel:123-456-7890" class="tolt ftr-btn" data-microtip-position="left" data-tooltip="Call Now"><i class="fal fa-phone"></i></a>
-                                        </div>
-                                    </div>
-                                </article>
-                            </div>
-                            <!--  agent card item end -->
-                        </div>
-                        <!-- slick-slide-item end-->
-                        <!-- slick-slide-item -->
-                        <div class="slick-slide-item">
-                            <!--  agent card item -->
-                            <div class="listing-item">
-                                <article class="geodir-category-listing fl-wrap">
-                                    <div class="geodir-category-img fl-wrap  agent_card">
-                                        <a href="agent-single.php" class="geodir-category-img_item">
-                                            <img src="images/agency/agent/1.jpg" alt="">
-                                            <ul class="list-single-opt_header_cat">
-                                                <li><span class="cat-opt color-bg">12 listings</span></li>
-                                            </ul>
-                                        </a>
-                                        <div class="agent-card-social fl-wrap">
-                                            <ul>
-                                                <li><a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
-                                                <li><a href="#" target="_blank"><i class="fab fa-twitter"></i></a></li>
-                                                <li><a href="#" target="_blank"><i class="fab fa-instagram"></i></a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="listing-rating card-popup-rainingvis" data-starrating2="4"><span class="re_stars-title">Good</span></div>
-                                    </div>
-                                    <div class="geodir-category-content fl-wrap">
-                                        <div class="card-verified tolt" data-microtip-position="left" data-tooltip="Verified"><i class="fal fa-user-check"></i></div>
-                                        <div class="agent_card-title fl-wrap">
-                                            <h4><a href="agent-single.php">Martin Smith</a></h4>
-                                            <h5><a href="agency-single.php">Mavers RealEstate agency</a></h5>
-                                        </div>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in pulvinar neque. Nulla finibus lobortis pulvinar. Donec a consectetur nulla.</p>
-                                        <div class="geodir-category-footer fl-wrap">
-                                            <a href="agent-single.php" class="btn float-btn color-bg small-btn">View Profile</a>
-                                            <a href="mailto:yourmail@email.com" class="tolt ftr-btn" data-microtip-position="left" data-tooltip="Write Message"><i class="fal fa-envelope"></i></a>
-                                            <a href="tel:123-456-7890" class="tolt ftr-btn" data-microtip-position="left" data-tooltip="Call Now"><i class="fal fa-phone"></i></a>
-                                        </div>
-                                    </div>
-                                </article>
-                            </div>
-                            <!--  agent card item end -->
-                        </div>
+
                         <!-- slick-slide-item end-->
                     </div>
                     <div class="swiper-button-prev lc-wbtn lc-wbtn_prev"><i class="far fa-angle-left"></i></div>

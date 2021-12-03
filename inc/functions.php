@@ -50,3 +50,13 @@ function getCities()
     $r = $q->fetchAll(PDO::FETCH_ASSOC);
     return $r;
 }
+function getAgents()
+{
+    include("admin/db.php");
+    $role = "agent";
+    $q = $con->prepare("SELECT * FROM users WHERE `role`=?");
+    $q->bindParam(1, $role);
+    $q->execute();
+    $r = $q->fetchAll(PDO::FETCH_ASSOC);
+    return $r;
+}
