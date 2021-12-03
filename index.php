@@ -1,9 +1,8 @@
 <?php include('inc/header.php');
 include('inc/functions.php');
-$listing_array = getListings();
-$cities_array = getCities();
-$agents_array = getAgents();
-
+$listing_data = new listingData();
+$fetch = new fetchData();
+$agentData = new agentData();
 ?>
 <!-- header end  -->
 <!-- wrapper  -->
@@ -38,7 +37,7 @@ $agents_array = getAgents();
                         <div class="main-search-input-item">
                             <select data-placeholder="All Categories" class="chosen-select">
                                 <option>All Cities</option>
-                                <?php foreach ($cities_array as $key => $value) {
+                                <?php foreach ($fetch->getCities() as $key => $value) {
                                     echo "<option value=\"{$value['id']}\">{$value['name']}</option>";
                                 } ?>
 
@@ -91,7 +90,7 @@ $agents_array = getAgents();
                 <div class="clearfix"></div>
                 <!-- grid-item-holder-->
                 <div class="grid-item-holder gallery-items gisp fl-wrap">
-                    <?php foreach ($listing_array as $key => $value) {
+                    <?php foreach ($listing_data->getListings() as $key => $value) {
 
                     ?>
                         <!-- gallery-item-->
@@ -133,8 +132,8 @@ $agents_array = getAgents();
                                             </ul>
                                         </div>
                                         <div class="geodir-category-footer fl-wrap">
-                                            <a href="agent-single.php" class="gcf-company"><img src="images/avatar/1.jpg" alt=""><span>By <?php echo ucfirst(getAuthorByID($value['author_id'])['first_name']) . " " . getAuthorByID($value['author_id'])['last_name']; ?></span></a>
-                                            <div class="listing-rating card-popup-rainingvis tolt" data-microtip-position="top" data-tooltip="<?php ratingComment($value['id']); ?>" data-starrating2="<?php echo $value['overall_rating']; ?>"></div>
+                                            <a href="agent-single.php" class="gcf-company"><img src="images/avatar/1.jpg" alt=""><span>By <?php echo ucfirst($listing_data->listingAuthor($value['author_id'])['first_name']) . " " . $listing_data->listingAuthor($value['author_id'])['last_name']; ?></span></a>
+                                            <div class="listing-rating card-popup-rainingvis tolt" data-microtip-position="top" data-tooltip="<?php $listing_data->ratingComment($value['id']); ?>" data-starrating2="<?php echo $value['overall_rating']; ?>"></div>
                                         </div>
                                     </div>
                                 </article>
@@ -213,7 +212,7 @@ $agents_array = getAgents();
                 <div class="half-carousel-conatiner">
                     <div class="half-carousel fl-wrap full-height">
                         <!--slick-item -->
-                        <?php foreach ($cities_array as $key => $value) {
+                        <?php foreach ($fetch->getCities() as $key => $value) {
 
                         ?>
                             <div class="slick-item">
@@ -249,7 +248,7 @@ $agents_array = getAgents();
                 <div class="listing-carousel-wrapper lc_hero carousel-wrap fl-wrap">
                     <div class="listing-carousel carousel ">
                         <!-- slick-slide-item -->
-                        <?php foreach ($agents_array as $key => $value) {
+                        <?php foreach ($fetch->getAgents() as $key => $value) {
                         ?>
                             <div class="slick-slide-item">
                                 <!--  agent card item -->
@@ -272,14 +271,19 @@ $agents_array = getAgents();
                                             <div class="listing-rating card-popup-rainingvis" data-starrating2="5"><span class="re_stars-title">Excellent</span></div>
                                         </div>
                                         <div class="geodir-category-content fl-wrap">
-                                            <div class="card-verified tolt" data-microtip-position="left" data-tooltip="Verified"><i class="fal fa-user-check"></i></div>
+                                            <?php if ($agentData->isVerified($value['id'])) {
+                                                echo "<div class=\"card-verified tolt\" data-microtip-position=\"left\" data-tooltip=\"Verified\"><i class=\"fal fa-user-check\"></i></div>";
+                                            } else {
+                                                echo "<div class=\"card-verified cv_not tolt\" data-microtip-position=\"left\" data-tooltip=\"Not Verified\"><i class=\"fal fa-minus-octagon\"></i></div>";
+                                            } ?>
+
                                             <div class="agent_card-title fl-wrap">
                                                 <h4><a href="agent-single.php?id=<?php echo $value['id']; ?>"><?php echo ucfirst($value['first_name']) . " " . $value['last_name']; ?></a></h4>
                                                 <h5><a href="agency-single.php?id=<?php echo $value['id']; ?>">CondorHome RealEstate agency</a></h5>
                                             </div>
                                             <p><?php echo $value['description']; ?></p>
                                             <div class="geodir-category-footer fl-wrap">
-                                                <a href="agent-single.php" class="btn float-btn color-bg small-btn">View Profile</a>
+                                                <a href="agent-single.php?id=<?php echo $value['id']; ?>" class="btn float-btn color-bg small-btn">View Profile</a>
                                                 <a href="mailto:<?php echo $value['email']; ?>" class="tolt ftr-btn" data-microtip-position="left" data-tooltip="Write Message"><i class="fal fa-envelope"></i></a>
                                                 <a href="tel:123-456-7890" class="tolt ftr-btn" data-microtip-position="left" data-tooltip="Call Now"><i class="fal fa-phone"></i></a>
                                             </div>
@@ -289,44 +293,7 @@ $agents_array = getAgents();
                                 <!--  agent card item end -->
                             </div>
                         <?php } ?>
-                        <div class="slick-slide-item">
-                            <!--  agent card item -->
-                            <div class="listing-item">
-                                <article class="geodir-category-listing fl-wrap">
-                                    <div class="geodir-category-img fl-wrap  agent_card">
-                                        <a href="agent-single.php" class="geodir-category-img_item">
-                                            <img src="images/agency/agent/1.jpg" alt="">
-                                            <ul class="list-single-opt_header_cat">
-                                                <li><span class="cat-opt color-bg">6 listings</span></li>
-                                            </ul>
-                                        </a>
-                                        <div class="agent-card-social fl-wrap">
-                                            <ul>
-                                                <li><a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
-                                                <li><a href="#" target="_blank"><i class="fab fa-twitter"></i></a></li>
-                                                <li><a href="#" target="_blank"><i class="fab fa-instagram"></i></a></li>
-                                                <li><a href="#" target="_blank"><i class="fab fa-vk"></i></a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="listing-rating card-popup-rainingvis" data-starrating2="3"><span class="re_stars-title">Average</span></div>
-                                    </div>
-                                    <div class="geodir-category-content fl-wrap">
-                                        <div class="card-verified cv_not tolt" data-microtip-position="left" data-tooltip="Not Verified"><i class="fal fa-minus-octagon"></i></div>
-                                        <div class="agent_card-title fl-wrap">
-                                            <h4><a href="agent-single.php">Jane Kobart</a></h4>
-                                            <h5><a href="agency-single.php">Mavers RealEstate agency</a></h5>
-                                        </div>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in pulvinar neque. Nulla finibus lobortis pulvinar. Donec a consectetur nulla.</p>
-                                        <div class="geodir-category-footer fl-wrap">
-                                            <a href="agent-single.php" class="btn float-btn color-bg small-btn">View Profile</a>
-                                            <a href="mailto:yourmail@email.com" class="tolt ftr-btn" data-microtip-position="left" data-tooltip="Write Message"><i class="fal fa-envelope"></i></a>
-                                            <a href="tel:123-456-7890" class="tolt ftr-btn" data-microtip-position="left" data-tooltip="Call Now"><i class="fal fa-phone"></i></a>
-                                        </div>
-                                    </div>
-                                </article>
-                            </div>
-                            <!--  agent card item end -->
-                        </div>
+
                         <!-- slick-slide-item end-->
                         <!-- slick-slide-item -->
 

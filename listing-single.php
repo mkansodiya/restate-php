@@ -1,4 +1,11 @@
-<?php include("inc/header.php"); ?>
+<?php include("inc/header.php");
+include('inc/functions.php');
+$listing_data = new listingData();
+if (isset($_GET['id'])) {
+    $listind_id = $_GET['id'];
+    $this_listing = $listing_data->getListings($listind_id);
+}
+?>
 <!-- header end  -->
 <!-- wrapper  -->
 <div id="wrapper">
@@ -22,10 +29,10 @@
                 <div class="list-single-header-item no-bg-list_sh fl-wrap">
                     <div class="row">
                         <div class="col-md-12">
-                            <h1>House in Financial District <span class="verified-badge tolt" data-microtip-position="bottom" data-tooltip="Verified"><i class="fas fa-check"></i></span></h1>
+                            <h1><?php echo $this_listing[0]['title']; ?><span class="verified-badge tolt" data-microtip-position="bottom" data-tooltip="Verified"><i class="fas fa-check"></i></span></h1>
                             <div class="geodir-category-location fl-wrap">
-                                <a href="#"><i class="fas fa-map-marker-alt"></i> 70 Bright St New York, USA</a>
-                                <div class="listing-rating card-popup-rainingvis" data-starrating2="4"><span class="re_stars-title">Good</span></div>
+                                <a href="#"><i class="fas fa-map-marker-alt"></i> <?php echo $this_listing[0]['address']; ?></a>
+                                <div class="listing-rating card-popup-rainingvis" data-starrating2="<?php echo $this_listing[0]['overall_rating']; ?>"><span class="re_stars-title"><?php $listing_data->ratingComment($listind_id); ?></span></div>
                             </div>
                             <div class="share-holder hid-share">
                                 <a href="#" class="share-btn showshare sfcs"> <i class="fas fa-share-alt"></i> Share </a>
@@ -34,8 +41,8 @@
                         </div>
                     </div>
                     <div class="list-single-header-footer fl-wrap">
-                        <div class="list-single-header-price" data-propertyprise="50500"><strong>Price:</strong><span>$</span>50.500</div>
-                        <div class="list-single-header-date"><span>Date:</span>20.05.2020</div>
+                        <div class="list-single-header-price" data-propertyprise="50500"><strong>Price:</strong><span>$</span><?php echo $this_listing[0]['price']; ?></div>
+                        <div class="list-single-header-date"><span>Date:</span><?php echo date('d-m-y', strtotime($this_listing[0]['added_on'])); ?></div>
                         <div class="list-single-stats">
                             <ul class="no-list-style">
                                 <li><span class="viewed-counter"><i class="fas fa-eye"></i> Viewed - 156 </span></li>
@@ -49,7 +56,7 @@
         <div class="breadcrumbs fw-breadcrumbs smpar fl-wrap">
             <div class="container">
                 <div class="breadcrumbs-list">
-                    <a href="#">Home</a><a href="#">Listings</a><a href="#">New York</a><span>Property Single</span>
+                    <a href="#">Home</a><a href="#">Listings</a><a href="#"><?php echo $listing_data->city($this_listing[0]['city_id'])['name']; ?></a><span>Property Single</span>
                 </div>
                 <div class="show-more-snopt smact"><i class="fal fa-ellipsis-v"></i></div>
                 <div class="show-more-snopt-tooltip">

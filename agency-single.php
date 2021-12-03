@@ -1,4 +1,6 @@
-<?php include('inc/header.php'); ?>
+<?php include('inc/header.php');
+
+?>
 <!-- header end  -->
 <!-- wrapper  -->
 <div id="wrapper">
