@@ -1,9 +1,9 @@
 <?php include("inc/header.php");
 include('inc/functions.php');
-$listing_data = new listingData();
+$listing_data = new query();
 if (isset($_GET['id'])) {
     $listind_id = $_GET['id'];
-    $this_listing = $listing_data->getListings($listind_id);
+    $this_listing = $listing_data->fetchData("listings", "*", "id=$listind_id");
 }
 ?>
 <!-- header end  -->
@@ -19,8 +19,9 @@ if (isset($_GET['id'])) {
                 <!--  list-single-opt_header-->
                 <div class="list-single-opt_header fl-wrap">
                     <ul class="list-single-opt_header_cat">
-                        <li><a href="#" class="cat-opt color-bg">Rent</a></li>
-                        <li><a href="#" class="cat-opt blue-bg">Sale</a></li>
+
+                        <li><a href="#" class="cat-opt color-bg"> <?php echo ucfirst($this_listing[0]['type']); ?></a></li>
+
                         <li><a href="#" class="cat-opt color-bg">Apartment</a></li>
                     </ul>
                 </div>
@@ -32,7 +33,8 @@ if (isset($_GET['id'])) {
                             <h1><?php echo $this_listing[0]['title']; ?><span class="verified-badge tolt" data-microtip-position="bottom" data-tooltip="Verified"><i class="fas fa-check"></i></span></h1>
                             <div class="geodir-category-location fl-wrap">
                                 <a href="#"><i class="fas fa-map-marker-alt"></i> <?php echo $this_listing[0]['address']; ?></a>
-                                <div class="listing-rating card-popup-rainingvis" data-starrating2="<?php echo $this_listing[0]['overall_rating']; ?>"><span class="re_stars-title"><?php $listing_data->ratingComment($listind_id); ?></span></div>
+                                <div class="listing-rating card-popup-rainingvis" data-starrating2="<?php echo $this_listing[0]['overall_rating']; ?>"><span class="re_stars-title"><?php $listing_data->ratingComment($listind_id);
+                                                                                                                                                                                    ?></span></div>
                             </div>
                             <div class="share-holder hid-share">
                                 <a href="#" class="share-btn showshare sfcs"> <i class="fas fa-share-alt"></i> Share </a>
@@ -56,7 +58,9 @@ if (isset($_GET['id'])) {
         <div class="breadcrumbs fw-breadcrumbs smpar fl-wrap">
             <div class="container">
                 <div class="breadcrumbs-list">
-                    <a href="#">Home</a><a href="#">Listings</a><a href="#"><?php echo $listing_data->city($this_listing[0]['city_id'])['name']; ?></a><span>Property Single</span>
+                    <a href="#">Home</a><a href="#">Listings</a><a href="#"><?php $city_id = $this_listing[0]['city_id'];
+                                                                            echo $listing_data->fetchData("cities", "*", "id=$city_id")[0]['name'];
+                                                                            ?></a><span>Property Single</span>
                 </div>
                 <div class="show-more-snopt smact"><i class="fal fa-ellipsis-v"></i></div>
                 <div class="show-more-snopt-tooltip">
@@ -118,6 +122,7 @@ if (isset($_GET['id'])) {
                                             </div>
                                         </div>
                                     </div>
+
                                     <!-- 2 end -->
                                     <!-- 3 -->
                                     <div class="gallery-item gallery-item-second">
@@ -164,40 +169,27 @@ if (isset($_GET['id'])) {
                             </div>
                             <div class="list-single-facts fl-wrap">
                                 <!-- inline-facts -->
-                                <div class="inline-facts-wrap">
-                                    <div class="inline-facts">
-                                        <i class="fal fa-home-lg"></i>
-                                        <h6>Type</h6>
-                                        <span>Apartment/ House</span>
+                                <?php
+                                foreach ($listing_data->fetchData("features", "*", "", "", "", "", 4) as $key => $value) {
+
+
+                                ?>
+                                    <div class="inline-facts-wrap">
+                                        <div class="inline-facts">
+                                            <?php echo $value['icon']; ?>
+                                            <h6><?php echo $value['name']; ?></h6>
+                                            <span><?php $feature_id = $value['id'];
+                                                    $listing_id = $_GET['id'];
+                                                    if (isset($listing_data->fetchData("feature_values", "*", "feature_id=$feature_id and parent_id=$listing_id")[0]['value'])) {
+                                                        echo $listing_data->fetchData("feature_values", "*", "feature_id=$feature_id and parent_id=$listing_id")[0]['value'];
+                                                    } else {
+                                                        echo "Data unvailable";
+                                                    } ?></span>
+                                        </div>
                                     </div>
-                                </div>
+                                <?php } ?>
                                 <!-- inline-facts end -->
-                                <!-- inline-facts  -->
-                                <div class="inline-facts-wrap">
-                                    <div class="inline-facts">
-                                        <i class="fal fa-users"></i>
-                                        <h6>Accomodation</h6>
-                                        <span>6 Guest</span>
-                                    </div>
-                                </div>
-                                <!-- inline-facts end -->
-                                <!-- inline-facts -->
-                                <div class="inline-facts-wrap">
-                                    <div class="inline-facts">
-                                        <i class="fal fa-bed"></i>
-                                        <h6>Bedrooms</h6>
-                                        <span>3 Bedrooms / 4 Beds</span>
-                                    </div>
-                                </div>
-                                <!-- inline-facts end -->
-                                <!-- inline-facts -->
-                                <div class="inline-facts-wrap">
-                                    <div class="inline-facts">
-                                        <i class="fal fa-bath"></i>
-                                        <h6>Bathrooms</h6>
-                                        <span>3 Full</span>
-                                    </div>
-                                </div>
+
                                 <!-- inline-facts end -->
                             </div>
                             <div class="list-single-main-container fl-wrap" id="sec3">
@@ -221,15 +213,20 @@ if (isset($_GET['id'])) {
                                     <div class="list-single-main-item_content fl-wrap">
                                         <div class="details-list">
                                             <ul>
-                                                <li><span>Property Id:</span>154</li>
-                                                <li><span>Property Lot Size:</span>850 m2</li>
-                                                <li><span>Bathrooms:</span>4</li>
-                                                <li><span>Rooms:</span>8</li>
-                                                <li><span>Bedrooms:</span>2</li>
-                                                <li><span>Garage Size:</span>2 cars</li>
-                                                <li><span>Available from:</span>25.05.2020</li>
-                                                <li><span>Price:</span>$ 50.500.00</li>
-                                                <li><span>Type:</span>Apartment/House</li>
+                                                <li><span>Property Id:</span><?php echo $listing_id; ?></li>
+                                                <?php
+                                                foreach ($listing_data->fetchData("features") as $key => $value) {
+                                                ?>
+                                                    <?php
+                                                    $feature_id = $value["id"];
+
+                                                    $fvalue = $listing_data->fetchData("feature_values", "*", "feature_id=$feature_id and parent_id=$listing_id")[0]['value'];
+                                                    if (isset($fvalue)) {
+                                                        echo "<li><span>{$value['name']}:</span>{$fvalue}</li>";
+                                                    } ?>
+
+                                                <?php } ?>
+
                                             </ul>
                                         </div>
                                     </div>
@@ -675,182 +672,53 @@ if (isset($_GET['id'])) {
                     </div>
                     <div class="listing-carousel carousel ">
                         <!-- slick-slide-item -->
-                        <div class="slick-slide-item">
-                            <!-- listing-item -->
-                            <div class="listing-item">
-                                <article class="geodir-category-listing fl-wrap">
-                                    <div class="geodir-category-img fl-wrap">
-                                        <a href="listing-single.html" class="geodir-category-img_item">
-                                            <img src="images/all/1.jpg" alt="">
-                                            <div class="overlay"></div>
-                                        </a>
-                                        <div class="geodir-category-location">
-                                            <a href="#4" class="map-item"><i class="fas fa-map-marker-alt"></i> 70 Bright St New York, USA</a>
-                                        </div>
-                                        <ul class="list-single-opt_header_cat">
-                                            <li><a href="#" class="cat-opt blue-bg">Sale</a></li>
-                                            <li><a href="#" class="cat-opt color-bg">Apartment</a></li>
-                                        </ul>
-                                        <a href="#" class="geodir_save-btn tolt" data-microtip-position="left" data-tooltip="Save"><span><i class="fal fa-heart"></i></span></a>
-                                        <a href="#" class="compare-btn tolt" data-microtip-position="left" data-tooltip="Compare"><span><i class="fal fa-random"></i></span></a>
-                                        <div class="geodir-category-listing_media-list">
-                                            <span><i class="fas fa-camera"></i> 8</span>
-                                        </div>
-                                    </div>
-                                    <div class="geodir-category-content fl-wrap">
-                                        <h3><a href="listing-single.html">Gorgeous house for sale</a></h3>
-                                        <div class="geodir-category-content_price">$ 600,000</div>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in pulvinar neque. Nulla finibus lobortis pulvinar. Donec a consectetur nulla.</p>
-                                        <div class="geodir-category-content-details">
-                                            <ul>
-                                                <li><i class="fal fa-bed"></i><span>3</span></li>
-                                                <li><i class="fal fa-bath"></i><span>2</span></li>
-                                                <li><i class="fal fa-cube"></i><span>450 ft2</span></li>
+                        <?php
+                        foreach ($listing_data->fetchData('listings') as $key => $value) {
+
+                        ?>
+                            <div class="slick-slide-item">
+                                <!-- listing-item -->
+                                <div class="listing-item">
+                                    <article class="geodir-category-listing fl-wrap">
+                                        <div class="geodir-category-img fl-wrap">
+                                            <a href="listing-single.html" class="geodir-category-img_item">
+                                                <img src="images/all/1.jpg" alt="">
+                                                <div class="overlay"></div>
+                                            </a>
+                                            <div class="geodir-category-location">
+                                                <a href="#4" class="map-item"><i class="fas fa-map-marker-alt"></i> <?php echo $value['address']; ?></a>
+                                            </div>
+                                            <ul class="list-single-opt_header_cat">
+                                                <li><a href="#" class="cat-opt blue-bg"><?php echo ucfirst($value['type']); ?></a></li>
+                                                <li><a href="#" class="cat-opt color-bg">Apartment</a></li>
                                             </ul>
+                                            <a href="#" class="geodir_save-btn tolt" data-microtip-position="left" data-tooltip="Save"><span><i class="fal fa-heart"></i></span></a>
+                                            <a href="#" class="compare-btn tolt" data-microtip-position="left" data-tooltip="Compare"><span><i class="fal fa-random"></i></span></a>
+                                            <div class="geodir-category-listing_media-list">
+                                                <span><i class="fas fa-camera"></i> 8</span>
+                                            </div>
                                         </div>
-                                        <div class="geodir-category-footer fl-wrap">
-                                            <a href="agent-single.html" class="gcf-company"><img src="images/avatar/1.jpg" alt=""><span>By Liza Rose</span></a>
-                                            <div class="listing-rating card-popup-rainingvis tolt" data-microtip-position="top" data-tooltip="Good" data-starrating2="4"></div>
+                                        <div class="geodir-category-content fl-wrap">
+                                            <h3><a href="listing-single.html"><?php echo $value['title'] . " for " .  $value["type"]; ?> </a></h3>
+                                            <div class="geodir-category-content_price">$ 600,000</div>
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in pulvinar neque. Nulla finibus lobortis pulvinar. Donec a consectetur nulla.</p>
+                                            <div class="geodir-category-content-details">
+                                                <ul>
+                                                    <li><i class="fal fa-bed"></i><span>3</span></li>
+                                                    <li><i class="fal fa-bath"></i><span>2</span></li>
+                                                    <li><i class="fal fa-cube"></i><span>450 ft2</span></li>
+                                                </ul>
+                                            </div>
+                                            <div class="geodir-category-footer fl-wrap">
+                                                <a href="agent-single.html" class="gcf-company"><img src="images/avatar/1.jpg" alt=""><span>By Liza Rose</span></a>
+                                                <div class="listing-rating card-popup-rainingvis tolt" data-microtip-position="top" data-tooltip="Good" data-starrating2="4"></div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </article>
+                                    </article>
+                                </div>
+                                <!-- listing-item end-->
                             </div>
-                            <!-- listing-item end-->
-                        </div>
-                        <!-- slick-slide-item end-->
-                        <!-- slick-slide-item -->
-                        <div class="slick-slide-item">
-                            <!-- listing-item -->
-                            <div class="listing-item">
-                                <article class="geodir-category-listing fl-wrap">
-                                    <div class="geodir-category-img fl-wrap">
-                                        <a href="listing-single.html" class="geodir-category-img_item">
-                                            <img src="images/all/1.jpg" alt="">
-                                            <div class="overlay"></div>
-                                        </a>
-                                        <div class="geodir-category-location">
-                                            <a href="#4" class="map-item"><i class="fas fa-map-marker-alt"></i> 40 Journal Square , NJ, USA</a>
-                                        </div>
-                                        <ul class="list-single-opt_header_cat">
-                                            <li><a href="#" class="cat-opt blue-bg">Sale</a></li>
-                                            <li><a href="#" class="cat-opt color-bg">Apartment</a></li>
-                                        </ul>
-                                        <a href="#" class="geodir_save-btn tolt" data-microtip-position="left" data-tooltip="Save"><span><i class="fal fa-heart"></i></span></a>
-                                        <a href="#" class="compare-btn tolt" data-microtip-position="left" data-tooltip="Compare"><span><i class="fal fa-random"></i></span></a>
-                                        <div class="geodir-category-listing_media-list">
-                                            <span><i class="fas fa-camera"></i> 47</span>
-                                        </div>
-                                    </div>
-                                    <div class="geodir-category-content fl-wrap">
-                                        <h3><a href="listing-single.html">Luxury Family Home</a></h3>
-                                        <div class="geodir-category-content_price">$ 300,000</div>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in pulvinar neque. Nulla finibus lobortis pulvinar. Donec a consectetur nulla.</p>
-                                        <div class="geodir-category-content-details">
-                                            <ul>
-                                                <li><i class="fal fa-bed"></i><span>4</span></li>
-                                                <li><i class="fal fa-bath"></i><span>2</span></li>
-                                                <li><i class="fal fa-cube"></i><span>460 ft2</span></li>
-                                            </ul>
-                                        </div>
-                                        <div class="geodir-category-footer fl-wrap">
-                                            <a href="agent-single.html" class="gcf-company"><img src="images/avatar/1.jpg" alt=""><span>By Anna Lips</span></a>
-                                            <div class="listing-rating card-popup-rainingvis tolt" data-microtip-position="top" data-tooltip="Excellent" data-starrating2="5"></div>
-                                        </div>
-                                    </div>
-                                </article>
-                            </div>
-                            <!-- listing-item end-->
-                        </div>
-                        <!-- slick-slide-item end-->
-                        <!-- slick-slide-item -->
-                        <div class="slick-slide-item">
-                            <!-- listing-item -->
-                            <div class="listing-item">
-                                <article class="geodir-category-listing fl-wrap">
-                                    <div class="geodir-category-img fl-wrap">
-                                        <a href="listing-single.html" class="geodir-category-img_item">
-                                            <img src="images/all/1.jpg" alt="">
-                                            <div class="overlay"></div>
-                                        </a>
-                                        <div class="geodir-category-location">
-                                            <a href="#4" class="map-item"><i class="fas fa-map-marker-alt"></i> 34-42 Montgomery St , NY, USA</a>
-                                        </div>
-                                        <ul class="list-single-opt_header_cat">
-                                            <li><a href="#" class="cat-opt blue-bg">Sale</a></li>
-                                            <li><a href="#" class="cat-opt color-bg">Apartment</a></li>
-                                        </ul>
-                                        <a href="#" class="geodir_save-btn tolt" data-microtip-position="left" data-tooltip="Save"><span><i class="fal fa-heart"></i></span></a>
-                                        <a href="#" class="compare-btn tolt" data-microtip-position="left" data-tooltip="Compare"><span><i class="fal fa-random"></i></span></a>
-                                        <div class="geodir-category-listing_media-list">
-                                            <span><i class="fas fa-camera"></i> 4</span>
-                                        </div>
-                                    </div>
-                                    <div class="geodir-category-content fl-wrap">
-                                        <h3><a href="listing-single.html">Gorgeous house for sale</a></h3>
-                                        <div class="geodir-category-content_price">$ 120,000</div>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in pulvinar neque. Nulla finibus lobortis pulvinar. Donec a consectetur nulla.</p>
-                                        <div class="geodir-category-content-details">
-                                            <ul>
-                                                <li><i class="fal fa-bed"></i><span>2</span></li>
-                                                <li><i class="fal fa-bath"></i><span>1</span></li>
-                                                <li><i class="fal fa-cube"></i><span>220 ft2</span></li>
-                                            </ul>
-                                        </div>
-                                        <div class="geodir-category-footer fl-wrap">
-                                            <a href="agent-single.html" class="gcf-company"><img src="images/avatar/1.jpg" alt=""><span>By Mark Frosty</span></a>
-                                            <div class="listing-rating card-popup-rainingvis tolt" data-microtip-position="top" data-tooltip="Good" data-starrating2="4"></div>
-                                        </div>
-                                    </div>
-                                </article>
-                            </div>
-                            <!-- listing-item end-->
-                        </div>
-                        <!-- slick-slide-item end-->
-                        <!-- slick-slide-item -->
-                        <div class="slick-slide-item">
-                            <!-- listing-item -->
-                            <div class="listing-item">
-                                <article class="geodir-category-listing fl-wrap">
-                                    <div class="geodir-category-img fl-wrap">
-                                        <a href="listing-single.html" class="geodir-category-img_item">
-                                            <img src="images/all/1.jpg" alt="">
-                                            <div class="overlay"></div>
-                                        </a>
-                                        <div class="geodir-category-location">
-                                            <a href="#4" class="map-item"><i class="fas fa-map-marker-alt"></i> W 85th St, New York, USA </a>
-                                        </div>
-                                        <ul class="list-single-opt_header_cat">
-                                            <li><a href="#" class="cat-opt blue-bg">Sale</a></li>
-                                            <li><a href="#" class="cat-opt color-bg">Apartment</a></li>
-                                        </ul>
-                                        <a href="#" class="geodir_save-btn tolt" data-microtip-position="left" data-tooltip="Save"><span><i class="fal fa-heart"></i></span></a>
-                                        <a href="#" class="compare-btn tolt" data-microtip-position="left" data-tooltip="Compare"><span><i class="fal fa-random"></i></span></a>
-                                        <div class="geodir-category-listing_media-list">
-                                            <span><i class="fas fa-camera"></i> 13</span>
-                                        </div>
-                                    </div>
-                                    <div class="geodir-category-content fl-wrap">
-                                        <h3><a href="listing-single.html">Contemporary Apartment</a></h3>
-                                        <div class="geodir-category-content_price">$ 1,600,000</div>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in pulvinar neque. Nulla finibus lobortis pulvinar. Donec a consectetur nulla.</p>
-                                        <div class="geodir-category-content-details">
-                                            <ul>
-                                                <li><i class="fal fa-bed"></i><span>4</span></li>
-                                                <li><i class="fal fa-bath"></i><span>1</span></li>
-                                                <li><i class="fal fa-cube"></i><span>550 ft2</span></li>
-                                            </ul>
-                                        </div>
-                                        <div class="geodir-category-footer fl-wrap">
-                                            <a href="agent-single.html" class="gcf-company"><img src="images/avatar/1.jpg" alt=""><span>By Bill Trust</span></a>
-                                            <div class="listing-rating card-popup-rainingvis tolt" data-microtip-position="top" data-tooltip="Excellent
-                                                            " data-starrating2="5"></div>
-                                        </div>
-                                    </div>
-                                </article>
-                            </div>
-                            <!-- listing-item end-->
-                        </div>
-                        <!-- slick-slide-item end-->
+                        <?php } ?>
                     </div>
                     <div class="swiper-button-prev lc-wbtn lc-wbtn_prev"><i class="far fa-angle-left"></i></div>
                     <div class="swiper-button-next lc-wbtn lc-wbtn_next"><i class="far fa-angle-right"></i></div>
