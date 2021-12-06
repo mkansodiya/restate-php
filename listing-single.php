@@ -240,75 +240,41 @@ if (isset($_GET['id'])) {
                                     <!--   rooms-container -->
                                     <div class="rooms-container fl-wrap">
                                         <!--  rooms-item -->
-                                        <div class="rooms-item fl-wrap">
-                                            <div class="rooms-media">
-                                                <img src="images/all/1.jpg" alt="">
-                                                <div class="dynamic-gal more-photos-button color-bg" data-dynamicPath="[{'src': 'images/all/1.jpg'}, {'src': 'images/all/1.jpg'},{'src': 'images/all/1.jpg'}]"><i class="fas fa-camera"></i> <span>3 photos</span> </div>
-                                            </div>
-                                            <div class="rooms-details">
-                                                <div class="rooms-details-header fl-wrap">
-                                                    <span class="rooms-area">44<strong> / sq ft</strong></span>
-                                                    <h3>Standard Family Room</h3>
-                                                    <h5>Additional Rooms: <span>Guest Bath</span></h5>
+                                        <?php
+                                        foreach ($listing_data->fetchData("rooms", "*", "parent_id={$listing_id}") as $key => $value) {
+
+
+                                        ?>
+                                            <div class="rooms-item fl-wrap">
+                                                <div class="rooms-media">
+                                                    <img src="<?php echo $value['image']; ?>" alt="">
+
+                                                    <div class="dynamic-gal more-photos-button color-bg" data-dynamicPath="[<?php echo "{'src': '{$value['image']}'}"; ?>]"><i class="fas fa-camera"></i> <span><?php echo "1"; ?> photos</span> </div>
                                                 </div>
-                                                <p>Morbi varius, nulla sit amet rutrum elementum, est elit finibus tellus, ut tristique elit risus at metus. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                                                <div class="facilities-list fl-wrap">
-                                                    <ul>
-                                                        <li class="tolt" data-microtip-position="top" data-tooltip="Air conditioner"><i class="fal fa-snowflake"></i></li>
-                                                        <li class="tolt" data-microtip-position="top" data-tooltip="Tv Inside"><i class="fal fa-tv"></i> </li>
-                                                        <li class="tolt" data-microtip-position="top" data-tooltip="Bed Inside"><i class="fal fa-bed"></i></li>
-                                                        <li class="tolt" data-microtip-position="top" data-tooltip="Fireplace"><i class="fal fa-fireplace"></i> </li>
-                                                    </ul>
+                                                <div class="rooms-details">
+                                                    <div class="rooms-details-header fl-wrap">
+                                                        <span class="rooms-area"><?php echo $value['area']; ?><strong> / sq ft</strong></span>
+                                                        <h3><?php echo $value['name']; ?></h3>
+                                                        <h5>Additional Rooms: <span>Guest Bath</span></h5>
+                                                    </div>
+                                                    <p><?php echo $value['description']; ?></p>
+                                                    <div class="facilities-list fl-wrap">
+                                                        <ul>
+                                                            <?php foreach ($listing_data->fetchData("available_facilities", "*", "parent_id={$value['id']} and `for`='rooms'", "", "", "", 4) as $key => $value) {
+
+                                                            ?>
+                                                                <?php $id = $value['fac_id'];
+                                                                echo "<li class=\"tolt\" data-microtip-position=\"top\" data-tooltip=\"{$listing_data->fetchData('facilities', '*', "id={$id}")[0]['name']}\">{$listing_data->fetchData('facilities', '*', "id={$id}")[0]['icon']}</li>"; ?>
+
+                                                            <?php } ?>
+                                                        </ul>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        <?php } ?>
                                         <!--  rooms-item end -->
-                                        <!--  rooms-item -->
-                                        <div class="rooms-item fl-wrap">
-                                            <div class="rooms-media">
-                                                <img src="images/all/1.jpg" alt="">
-                                                <div class="dynamic-gal more-photos-button color-bg" data-dynamicPath="[{'src': 'images/all/1.jpg'}, {'src': 'images/all/1.jpg'} ]"><i class="fas fa-camera"></i> <span>2 photos</span> </div>
-                                            </div>
-                                            <div class="rooms-details">
-                                                <div class="rooms-details-header fl-wrap">
-                                                    <span class="rooms-area">18<strong> / sq ft</strong></span>
-                                                    <h3>Modern Bathroom</h3>
-                                                    <h5>Additional Rooms: <span>Sauna</span></h5>
-                                                </div>
-                                                <p>Morbi varius, nulla sit amet rutrum elementum, est elit finibus tellus, ut tristique elit risus at metus. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                                                <div class="facilities-list fl-wrap">
-                                                    <ul>
-                                                        <li class="tolt" data-microtip-position="top" data-tooltip="Ceramic bath"><i class="fal fa-bath"></i></li>
-                                                        <li class="tolt" data-microtip-position="top" data-tooltip="Multifunctional Shower"><i class="fal fa-shower"></i></li>
-                                                        <li class="tolt" data-microtip-position="top" data-tooltip="Sauna"> <i class="fal fa-hot-tub"></i></li>
-                                                        <li class="tolt" data-microtip-position="top" data-tooltip="Panoramic windows"><i class="fal fa-columns"></i></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!--  rooms-item end -->
-                                        <!--  rooms-item -->
-                                        <div class="rooms-item fl-wrap">
-                                            <div class="rooms-media">
-                                                <img src="images/all/1.jpg" alt="">
-                                                <div class="dynamic-gal more-photos-button color-bg" data-dynamicPath="[{'src': 'images/all/1.jpg'}, {'src': 'images/all/1.jpg'},{'src': 'images/all/1.jpg'}]"><i class="fas fa-camera"></i> <span>3 photos</span> </div>
-                                            </div>
-                                            <div class="rooms-details">
-                                                <div class="rooms-details-header fl-wrap">
-                                                    <span class="rooms-area">27<strong> / sq ft</strong></span>
-                                                    <h3>Spacious Kitchen</h3>
-                                                    <h5>Additional Rooms: <span>Pantry</span></h5>
-                                                </div>
-                                                <p>Morbi varius, nulla sit amet rutrum elementum, est elit finibus tellus, ut tristique elit risus at metus. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                                                <div class="facilities-list fl-wrap">
-                                                    <ul>
-                                                        <li class="tolt" data-microtip-position="top" data-tooltip="Microwave"><i class="fal fa-washer"></i> </li>
-                                                        <li class="tolt" data-microtip-position="top" data-tooltip="Panoramic Windows"><i class="fal fa-columns"></i></li>
-                                                        <li class="tolt" data-microtip-position="top" data-tooltip="Refrigerator"><i class="fal fa-temperature-frigid"></i></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
+
+
                                         <!--  rooms-item end -->
                                     </div>
                                     <!--   rooms-container end -->
@@ -319,23 +285,20 @@ if (isset($_GET['id'])) {
                                     <div class="list-single-main-item-title">
                                         <h3>Floor Plans</h3>
                                     </div>
-                                    <div class="accordion">
-                                        <a class="toggle act-accordion" href="#"> First Floor Plan <strong>286 sq ft</strong> <span></span> </a>
-                                        <div class="accordion-inner visible">
-                                            <img src="images/plans/1.jpg" alt="">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in pulvinar neque. Nulla finibus lobortis pulvinar. Donec a consectetur nulla. Nulla posuere sapien vitae lectus suscipit, et pulvinar nisi tincidunt. .</p>
+                                    <?php $floor_plans = $listing_data->fetchData("floor_plans", "*", "parent_id={$listing_id}");
+                                    for ($i = 0; $i < count($floor_plans); $i++) {
+
+                                    ?>
+                                        <div class="accordion ">
+                                            <a class="toggle " href="#"> <?php echo $floor_plans[$i]['name']; ?> <strong><?php echo $floor_plans[$i]['area']; ?> sq ft</strong> <span></span> </a>
+                                            <div class="accordion-inner <?php if ($i == 0) {
+                                                                            echo "visible";
+                                                                        } ?>">
+                                                <img src="<?php echo $floor_plans[$i]['image']; ?>" alt="">
+                                                <p><?php echo $floor_plans[$i]['description']; ?></p>
+                                            </div>
                                         </div>
-                                        <a class="toggle" href="#">Second Floor Plan <strong>280 sq ft</strong> <span></span></a>
-                                        <div class="accordion-inner">
-                                            <img src="images/plans/1.jpg" alt="">
-                                            <p>Aliquam erat volutpat. Curabitur convallis fringilla diam sed aliquam. Sed tempor iaculis massa faucibus feugiat. In fermentum facilisis massa, a consequat purus viverra</p>
-                                        </div>
-                                        <a class="toggle" href="#"> Garage Plan <strong>180 sq ft</strong> <span></span></a>
-                                        <div class="accordion-inner">
-                                            <img src="images/plans/1.jpg" alt="">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tempor iaculis massa faucibus feugiat. In fermentum facilisis massa, a consequat purus viverra.</p>
-                                        </div>
-                                    </div>
+                                    <?php } ?>
                                 </div>
                                 <!-- list-single-main-item end -->
                                 <!-- list-single-main-item -->
@@ -359,14 +322,11 @@ if (isset($_GET['id'])) {
                                     <div class="list-single-main-item_content fl-wrap">
                                         <div class="listing-features ">
                                             <ul>
-                                                <li><a href="#"><i class="fal fa-dumbbell"></i> Gym</a></li>
-                                                <li><a href="#"><i class="fal fa-wifi"></i> Wi Fi</a></li>
-                                                <li><a href="#"><i class="fal fa-parking"></i> Parking</a></li>
-                                                <li><a href="#"><i class="fal fa-cloud"></i> Air Conditioned</a></li>
-                                                <li><a href="#"><i class="fal fa-swimmer"></i> Pool</a></li>
-                                                <li><a href="#"><i class="fal fa-cctv"></i> Security</a></li>
-                                                <li><a href="#"><i class="fal fa-washer"></i> Laundry Room</a></li>
-                                                <li><a href="#"><i class="fal fa-utensils"></i> Equipped Kitchen</a></li>
+                                                <?php
+                                                foreach ($listing_data->fetchData("available_facilities", "*", "parent_id={$listing_id} and `for`='listings'") as $key => $value) {
+                                                    echo "<li><a href=\"#\">{$listing_data->fetchData("facilities", "*", "id={$value['fac_id']}")[0]['icon']} {$listing_data->fetchData("facilities", "*", "id={$value['fac_id']}")[0]['name']}</a></li>";
+                                                } ?>
+
                                             </ul>
                                         </div>
                                     </div>
@@ -384,7 +344,7 @@ if (isset($_GET['id'])) {
                                 <!-- list-single-main-item -->
                                 <div class="list-single-main-item fl-wrap" id="sec7">
                                     <div class="list-single-main-item-title">
-                                        <h3>Reviews <span>2</span></h3>
+                                        <h3>Reviews <span><?php echo count($listing_data->fetchData('reviews', "*", "parent_id={$listing_id}")); ?></span></h3>
                                     </div>
                                     <div class="list-single-main-item_content fl-wrap">
                                         <div class="reviews-comments-wrap fl-wrap">
@@ -393,43 +353,34 @@ if (isset($_GET['id'])) {
                                                 <div class="listing-rating card-popup-rainingvis" data-starrating2="4"><span class="re_stars-title">Good</span></div>
                                             </div>
                                             <!-- reviews-comments-item -->
-                                            <div class="reviews-comments-item">
-                                                <div class="review-comments-avatar">
-                                                    <img src="images/avatar/1.jpg" alt="">
-                                                </div>
-                                                <div class="reviews-comments-item-text smpar">
-                                                    <div class="box-widget-menu-btn smact"><i class="far fa-ellipsis-h"></i></div>
-                                                    <div class="show-more-snopt-tooltip bxwt">
-                                                        <a href="#"> <i class="fas fa-reply"></i> Reply</a>
-                                                        <a href="#"> <i class="fas fa-exclamation-triangle"></i> Report </a>
+                                            <?php
+                                            foreach ($listing_data->fetchData('reviews', "*", "parent_id={$listing_id}") as $key => $value) {
+
+                                            ?>
+                                                <div class="reviews-comments-item">
+                                                    <div class="review-comments-avatar">
+                                                        <img src="<?php if (isset($listing_data->fetchData("users", "*", "id={$value['author_id']}")[0]['image'])) {
+                                                                        echo $listing_data->fetchData("users", "*", "id={$value['author_id']}")[0]['image'];
+                                                                    } else {
+                                                                        echo "http://www.goodmorningimagesdownload.com/wp-content/uploads/2020/05/No-Whatsapp-Dp-Images-1.jpg";
+                                                                    } ?>" alt="">
                                                     </div>
-                                                    <h4><a href="#">Liza Rose</a></h4>
-                                                    <div class="listing-rating card-popup-rainingvis" data-starrating2="3"><span class="re_stars-title">Average</span></div>
-                                                    <div class="clearfix"></div>
-                                                    <p>" Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. "</p>
-                                                    <div class="reviews-comments-item-date"><span class="reviews-comments-item-date-item"><i class="far fa-calendar-check"></i>12 April 2018</span><a href="#" class="rate-review"><i class="fal fa-thumbs-up"></i> Helpful Review <span>6</span> </a></div>
-                                                </div>
-                                            </div>
-                                            <!--reviews-comments-item end-->
-                                            <!-- reviews-comments-item -->
-                                            <div class="reviews-comments-item">
-                                                <div class="review-comments-avatar">
-                                                    <img src="images/avatar/1.jpg" alt="">
-                                                </div>
-                                                <div class="reviews-comments-item-text smpar">
-                                                    <div class="box-widget-menu-btn smact"><i class="far fa-ellipsis-h"></i></div>
-                                                    <div class="show-more-snopt-tooltip bxwt">
-                                                        <a href="#"> <i class="fas fa-reply"></i> Reply</a>
-                                                        <a href="#"> <i class="fas fa-exclamation-triangle"></i> Report </a>
+                                                    <div class=" reviews-comments-item-text smpar">
+                                                        <div class="box-widget-menu-btn smact"><i class="far fa-ellipsis-h"></i></div>
+                                                        <div class="show-more-snopt-tooltip bxwt">
+                                                            <a href="#"> <i class="fas fa-reply"></i> Reply</a>
+                                                            <a href="#"> <i class="fas fa-exclamation-triangle"></i> Report </a>
+                                                        </div>
+                                                        <h4><a href="#"><?php echo ucfirst($listing_data->fetchData("users", "*", "id={$value['author_id']}")[0]['first_name']); ?> </a></h4>
+                                                        <div class="listing-rating card-popup-rainingvis" data-starrating2="3"><span class="re_stars-title">Average</span></div>
+                                                        <div class="clearfix"></div>
+                                                        <p>" <?php echo $value['content']; ?> "</p>
+                                                        <div class="reviews-comments-item-date"><span class="reviews-comments-item-date-item"><i class="far fa-calendar-check"></i><?php echo date('d F, Y', strtotime($value['added_on'])); ?></span><a href="#" class="rate-review"><i class="fal fa-thumbs-up"></i> Helpful Review <span><?php echo $value['helpful_count']; ?> </span> </a></div>
                                                     </div>
-                                                    <h4><a href="#">Adam Koncy</a></h4>
-                                                    <div class="listing-rating card-popup-rainingvis" data-starrating2="5"><span class="re_stars-title">Excellent</span></div>
-                                                    <div class="clearfix"></div>
-                                                    <p>" Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc posuere convallis purus non cursus. Cras metus neque, gravida sodales massa ut. "</p>
-                                                    <div class="reviews-comments-item-date"><span class="reviews-comments-item-date-item"><i class="far fa-calendar-check"></i>03 December 2017</span><a href="#" class="rate-review"><i class="fal fa-thumbs-up"></i> Helpful Review <span>2</span> </a></div>
                                                 </div>
-                                            </div>
+                                            <?php } ?>
                                             <!--reviews-comments-item end-->
+
                                         </div>
                                     </div>
                                 </div>

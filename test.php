@@ -13,4 +13,4 @@ $d = new query();
 // foreach ($d->fetchData('listings') as $key => $value) {
 //     echo $value;
 // }
-echo $d->fetchData("feature_values", "*", "feature_id=1")[0]['value'];
+echo $d->fetchData('facilities')[0]['name'];

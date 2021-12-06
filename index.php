@@ -134,10 +134,14 @@ $agentData = new agentData();
                                             </ul>
                                         </div>
                                         <div class="geodir-category-footer fl-wrap">
-                                            <a href="agent-single.php" class="gcf-company"><img src="images/avatar/1.jpg" alt=""><span>By <?php //echo ucfirst($listing_data->listingAuthor($value['author_id'])['first_name']) . " " . $listing_data->listingAuthor($value['author_id'])['last_name']; 
-                                                                                                                                            ?></span></a>
-                                            <div class="listing-rating card-popup-rainingvis tolt" data-microtip-position="top" data-tooltip="<?php //$listing_data->ratingComment($value['id']); 
-                                                                                                                                                ?>" data-starrating2="<?php //echo $value['overall_rating']; 
+                                            <a href="agent-single.php" class="gcf-company"><img src="<?php if (isset($fetch->fetchData("users", "*", "id={$value['author_id']}")[0]['image'])) {
+                                                                                                            echo $fetch->fetchData("users", "*", "id={$value['author_id']}")[0]['image'];
+                                                                                                        } else {
+                                                                                                            echo "http://www.goodmorningimagesdownload.com/wp-content/uploads/2020/05/No-Whatsapp-Dp-Images-1.jpg";
+                                                                                                        } ?>" alt=""><span>By <?php echo ucfirst($fetch->fetchData("users", "*", "id={$value['author_id']}")[0]['first_name']) . " " . $fetch->fetchData("users", "*", "id={$value['author_id']}")[0]['last_name'];
+                                                                                                                                ?></span></a>
+                                            <div class="listing-rating card-popup-rainingvis tolt" data-microtip-position="top" data-tooltip="<?php $fetch->ratingComment($value['id']);
+                                                                                                                                                ?>" data-starrating2="<?php echo $value['overall_rating'];
                                                                                                                                                                         ?>"></div>
                                         </div>
                                     </div>
