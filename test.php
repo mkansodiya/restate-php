@@ -13,4 +13,5 @@ $d = new query();
 // foreach ($d->fetchData('listings') as $key => $value) {
 //     echo $value;
 // }
-echo $d->fetchData('facilities')[0]['name'];
+$features_arr = $d->fetchData("features");
+echo count($features_arr);

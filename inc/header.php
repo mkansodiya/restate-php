@@ -1,18 +1,20 @@
+<?php include_once('inc/functions.php'); ?>
 <!DOCTYPE HTML>
 <html lang="en">
 
 <head>
-    <!-- basic   -->
+    <!--=============== basic  ===============-->
     <meta charset="UTF-8">
     <title>Homeradar - Real Estate Listing Template</title>
     <meta name="robots" content="index, follow" />
     <meta name="keywords" content="" />
     <meta name="description" content="" />
-    <!-- css   -->
+    <!--=============== css  ===============-->
     <link type="text/css" rel="stylesheet" href="css/plugins.css">
     <link type="text/css" rel="stylesheet" href="css/style.css">
+    <link type="text/css" rel="stylesheet" href="css/dashboard-style.css">
     <link type="text/css" rel="stylesheet" href="css/color.css">
-    <!--  favicons  -->
+    <!--=============== favicons ===============-->
     <link rel="shortcut icon" href="images/favicon.ico">
 </head>
 
@@ -69,14 +71,25 @@
             </div>
             <!--  cart-btn end -->
             <!--  login btn -->
-            <div class="show-reg-form modal-open"><i class="fas fa-user"></i><span>Sign In</span></div>
+            <div class="show-reg-form dasbdord-submenu-open"><img src="images/avatar/1.jpg" alt=""></div>
             <!--  login btn  end -->
+            <!--  dashboard-submenu-->
+            <div class="dashboard-submenu">
+                <div class="dashboard-submenu-title fl-wrap">Welcome , <span>Alica Noory</span></div>
+                <ul>
+                    <li><a href="dashboard.php"><i class="fal fa-chart-line"></i>Dashboard</a></li>
+                    <li><a href="dashboard-add-listing.php"> <i class="fal fa-file-plus"></i>Add Listing</a></li>
+                    <li><a href="dashboard-myprofile.php"><i class="fal fa-user-edit"></i>Settings</a></li>
+                </ul>
+                <a href="index.php" class="color-bg db_log-out"><i class="far fa-power-off"></i> Log Out</a>
+            </div>
+            <!--  dashboard-submenu  end -->
             <!--  navigation -->
             <div class="nav-holder main-menu">
                 <nav>
                     <ul class="no-list-style">
                         <li>
-                            <a href="#" class="act-link">Home <i class="fa fa-caret-down"></i></a>
+                            <a href="#">Home <i class="fa fa-caret-down"></i></a>
                             <!--second level -->
                             <ul>
                                 <li><a href="index.php">Parallax Image</a></li>
@@ -124,7 +137,7 @@
                             <a href="blog.php">News</a>
                         </li>
                         <li>
-                            <a href="#">Pages <i class="fa fa-caret-down"></i></a>
+                            <a href="#" class="act-link">Pages <i class="fa fa-caret-down"></i></a>
                             <!--second level -->
                             <ul>
                                 <li><a href="about.php">About</a></li>

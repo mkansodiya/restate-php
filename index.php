@@ -1,8 +1,8 @@
 <?php include('inc/header.php');
-include('inc/functions.php');
-$listing_data = new listingData();
+
+//$listing_data = new listingData();
 $fetch = new query();
-$agentData = new agentData();
+// $agentData = new agentData();
 ?>
 <!-- header end  -->
 <!-- wrapper  -->
