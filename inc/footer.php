@@ -214,7 +214,7 @@
 <script src="js/jquery.min.js"></script>
 <script src="js/plugins.js"></script>
 <script src="js/scripts.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=YOU_API_KEY_HERE&libraries=places"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDwJSRi0zFjDemECmFl9JtRj1FY7TiTRRo&libraries=places"></script>
 <script src="js/map-single.js"></script>
 </body>
 

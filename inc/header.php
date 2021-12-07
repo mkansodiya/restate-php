@@ -1,4 +1,4 @@
-<?php include_once('inc/functions.php'); ?>
+<?php include('inc/functions.php'); ?>
 <!DOCTYPE HTML>
 <html lang="en">
 

@@ -13,5 +13,4 @@ $d = new query();
 // foreach ($d->fetchData('listings') as $key => $value) {
 //     echo $value;
 // }
-$features_arr = $d->fetchData("features");
-echo count($features_arr);
+echo $d->ratingComment(2);
