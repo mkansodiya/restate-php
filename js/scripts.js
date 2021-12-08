@@ -960,13 +960,11 @@ $(".fuzone input").each(function () {
 $(".add-room-item").on("click", function (e) {
   e.preventDefault();
   var newElem = $(this)
-      .parents(".add_room-item-wrap")
-      .find(".add_room-item")
-      .first()
-      .clone(),
-    parclone = $(this)
-      .parents(".add_room-item-wrap")
-      .find(".add_room-container");
+    .parents(".add_room-item-wrap")
+    .find(".add_room-item")
+    .first()
+    .clone();
+  parclone = $(this).parents(".add_room-item-wrap").find(".add_room-container");
   newElem.find("input").val("");
   newElem.appendTo(parclone);
   $(".fuzone input").each(function () {

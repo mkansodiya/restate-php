@@ -76,7 +76,7 @@ $action = new query();
                         <li><a href="#sec2">Location</a></li>
                         <li><a href="#sec3">Media</a></li>
                         <li><a href="#sec4">Details</a></li>
-                        <li><a href="#sec5">Rooms</a></li>
+
                         <li><a href="#sec6">Plans</a></li>
                         <li><a href="#sec7">Widgets</a></li>
                     </ul>
@@ -170,7 +170,7 @@ $action = new query();
                                     <div class="listsearch-input-item">
                                         <select data-placeholder="Apartments" name="city_id" class="chosen-select no-search-select">
                                             <?php foreach ($action->fetchData("cities") as $key => $value) {
-                                                echo " <option>{$value['name']}</option>";
+                                                echo " <option value=\"{$value['id']}\">{$value['name']}</option>";
                                             } ?>
 
 
@@ -251,12 +251,12 @@ $action = new query();
                                         ?>
                                             <div class="col-sm-6">
                                                 <label><?php echo $features_arr[$i]['name']; ?>: <span class="dec-icon"><?php echo $features_arr[$i]['icon']; ?></span></label>
-                                                <input type="text" placeholder="<?php echo $features_arr[$i]['name']; ?>" name="<?php echo $features_arr[$i]['name']; ?>" value="" />
+                                                <input type="text" placeholder="<?php echo $features_arr[$i]['placeholder']; ?>" name="<?php echo $features_arr[$i]['tag_name']; ?>" value="" />
                                             </div>
                                             <?php $i++ ?>
                                             <div class="col-sm-6">
                                                 <label><?php echo $features_arr[$i]['name']; ?>: <span class="dec-icon"><?php echo $features_arr[$i]['icon']; ?></span></label>
-                                                <input type="text" name="<?php echo $features_arr[$i]['name']; ?>" placeholder="<?php echo $features_arr[$i]['name']; ?>" value="" />
+                                                <input type="text" name="<?php echo $features_arr[$i]['tag_name']; ?>" placeholder="<?php echo $features_arr[$i]['placeholder']; ?>" value="" />
                                             </div>
                                         <?php } ?>
                                     </div>
@@ -288,77 +288,7 @@ $action = new query();
                     </div>
                     <!-- dasboard-widget-box  end-->
                     <!-- dasboard-widget-title -->
-                    <div class="dasboard-widget-title dwb-mar fl-wrap" id="sec5">
-                        <h5><i class="fas fa-home-lg-alt"></i>Rooms</h5>
-                        <div class="onoffswitch">
-                            <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch5" checked>
-                            <label class="onoffswitch-label" for="myonoffswitch5">
-                                <span class="onoffswitch-inner"></span>
-                                <span class="onoffswitch-switch"></span>
-                            </label>
-                        </div>
-                    </div>
-                    <!-- dasboard-widget-title end -->
-                    <!-- dasboard-widget-box  -->
-                    <div class="dasboard-widget-box   fl-wrap">
-                        <div class="custom-form add_room-item-wrap">
-                            <div class="add_room-container fl-wrap">
-                                <!-- add_room-item   -->
-                                <div class="add_room-item fl-wrap">
-                                    <span class="remove-rp tolt" data-microtip-position="left" data-tooltip="Remove Room"><i class="fal fa-times-circle"></i></span>
-                                    <div class="row">
-                                        <div class="col-sm-6">
-                                            <label>Room Title: <span class="dec-icon"><i class="fal fa-layer-group"></i></span></label>
-                                            <input type="text" name="room_title[]" placeholder="Standard Family Room" value="" />
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <label>Additional Room: <span class="dec-icon"><i class="fal fa-layer-plus"></i></span></label>
-                                            <input type="text" name="additional_room[]" placeholder="Example: Sauna" value="" />
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm-6">
-                                            <label>Room Details</label>
-                                            <div class="listsearch-input-item">
-                                                <textarea cols="40" name="room_desc[]" rows="3" style="height: 175px;margin-bottom: 10px" placeholder="Datails" spellcheck="false"></textarea>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <label>Room Images</label>
-                                            <div class="listsearch-input-item fl-wrap">
-                                                <div class="fuzone">
-                                                    <div class="fu-text">
-                                                        <span><i class="far fa-cloud-upload-alt"></i> Click here or drop files to upload</span>
-                                                        <div class="photoUpload-files fl-wrap"></div>
-                                                    </div>
-                                                    <input type="file" name="room_images[]" class="upload" multiple>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                    <label>Amenities: </label>
-                                    <div class=" add-list-tags fl-wrap">
-                                        <!-- Checkboxes -->
-                                        <ul class="fl-wrap filter-tags no-list-style ds-tg">
-                                            <?php foreach ($action->fetchData("facilities") as $key => $value) {
 
-                                            ?>
-                                                <li>
-                                                    <input id="check-aaa5" type="checkbox" value="<?php echo $value['id']; ?>" name="room_facilities[]">
-                                                    <label for="check-aaa5"> <?php echo $value['name']; ?></label>
-                                                </li>
-                                            <?php } ?>
-                                        </ul>
-                                        <!-- Checkboxes end -->
-                                    </div>
-                                </div>
-                                <!--add_room-item end  -->
-                            </div>
-                            <a href="#" class="add-room-item">Add New <i class="fal fa-plus"></i> </a>
-                        </div>
-                    </div>
-                    <!-- dasboard-widget-box  end-->
                     <!-- dasboard-widget-title -->
                     <div class="dasboard-widget-title dwb-mar fl-wrap" id="sec6">
                         <h5><i class="fas fa-ruler-combined"></i>House Plans </h5>
@@ -386,7 +316,7 @@ $action = new query();
                                                     <input type="text" name="plan_title[]" placeholder=" First Floor Plan " value="" />
                                                 </div>
                                                 <div class="col-sm-6">
-                                                    <label>Plan Optional info: <span class="dec-icon"><i class="far fa-ruler-horizontal"></i></span></label>
+                                                    <label>Plan area: <span class="dec-icon"><i class="far fa-ruler-horizontal"></i></span></label>
                                                     <input type="text" name="plan_area[]" placeholder="Example: 286 sq ft" value="" />
                                                 </div>
                                             </div>
