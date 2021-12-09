@@ -73,12 +73,10 @@ $action = new query();
                 <div class="dasboard-scrollnav-wrap scroll-to-fixed-fixed scroll-init2 fl-wrap">
                     <ul>
                         <li><a href="#sec1" class="act-scrlink">Info</a></li>
-                        <li><a href="#sec2">Location</a></li>
-                        <li><a href="#sec3">Media</a></li>
-                        <li><a href="#sec4">Details</a></li>
+
+
                         <li><a href="#sec5">Rooms</a></li>
-                        <li><a href="#sec6">Plans</a></li>
-                        <li><a href="#sec7">Widgets</a></li>
+
                     </ul>
                     <div class="progress-indicator">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="-1 -1 34 34">
@@ -99,19 +97,28 @@ $action = new query();
                         <div class="custom-form">
                             <div class="row">
                                 <div class="col-sm-4">
-                                    <label>Listing Title <span class="dec-icon"><i class="far fa-briefcase"></i></span></label>
-                                    <input type="text" placeholder="Name of your Listing" name="title" value="" />
-                                </div>
-                                <div class="col-sm-4">
-                                    <label>Type</label>
+                                    <label>Listing Type</label>
                                     <div class="listsearch-input-item">
-                                        <select data-placeholder="All Types" name="type" class="chosen-select no-search-select">
-                                            <option>All Types</option>
-                                            <option>Rent</option>
-                                            <option>Sale</option>
+                                        <select data-placeholder="Apartments" name="type" class="chosen-select no-search-select">
+                                            <option value="room">Room</option>
+
                                         </select>
                                     </div>
                                 </div>
+                                <div class="col-sm-4">
+
+                                    <label>Parent Listing</label>
+                                    <div class="listsearch-input-item">
+                                        <select data-placeholder="All Types" name="listing_id" class="chosen-select ">
+                                            <?php foreach ($action->fetchData("listings", "*", "", "", "id", "DESC") as $key => $value) {
+                                                echo "<option value=\"{$value['id']}\">{$value['title']}:{$value['id']}</option>";
+                                            } ?>
+
+                                        </select>
+
+                                    </div>
+                                </div>
+
                                 <div class="col-sm-4">
                                     <label>Listing Price <span class="dec-icon"><i class="far fa-money-bill-wave"></i></span></label>
                                     <input type="text" placeholder="Listing Price" name="price" value="" />
@@ -138,44 +145,7 @@ $action = new query();
                     </div>
 
                     <!-- dasboard-widget-box  end-->
-                    <!-- dasboard-widget-title -->
-                    <div class="dasboard-widget-title dwb-mar fl-wrap" id="sec3">
-                        <h5><i class="fas fa-image"></i>Header Media</h5>
-                    </div>
-                    <!-- dasboard-widget-title end -->
-                    <!-- dasboard-widget-box  -->
-                    <div class="dasboard-widget-box   fl-wrap">
-                        <div class="custom-form">
-                            <div class="add-list-media-header">
-                                <label class="radio inline">
-                                    <input type="radio" name="header_type" checked>
-                                    <span>Carousel</span>
-                                </label>
-                            </div>
-                            <div class="add-list-media-header">
-                                <label class="radio inline">
-                                    <input type="radio" name="header_type">
-                                    <span>Slider</span>
-                                </label>
-                            </div>
-                            <div class="add-list-media-header">
-                                <label class="radio inline">
-                                    <input type="radio" name="header_type">
-                                    <span> Background image</span>
-                                </label>
-                            </div>
-                            <div class="clearfix"></div>
-                            <div class="listsearch-input-item fl-wrap">
-                                <div class="fuzone">
-                                    <div class="fu-text">
-                                        <span><i class="far fa-cloud-upload-alt"></i> Click here or drop files to upload</span>
-                                        <div class="photoUpload-files fl-wrap"></div>
-                                    </div>
-                                    <input type="file" name="header_media" class="upload" multiple>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
                     <div class="dasboard-widget-title dwb-mar fl-wrap" id="sec5">
                         <h5><i class="fas fa-home-lg-alt"></i>Rooms</h5>
                         <div class="onoffswitch">
@@ -191,24 +161,29 @@ $action = new query();
                             <div class="add_room-container fl-wrap">
                                 <!-- add_room-item   -->
                                 <div class="add_room-item fl-wrap">
-                                    <span class="remove-rp tolt" data-microtip-position="left" data-tooltip="Remove Room"><i class="fal fa-times-circle"></i></span>
+
                                     <div class="row">
-                                        <div class="col-sm-6">
+                                        <div class="col-sm-4">
                                             <label>Room Title:
                                                 <span class="dec-icon"><i class="fal fa-layer-group"></i></span></label>
-                                            <input type="text" name="room_title[]" placeholder="Standard Family Room" value="" />
+                                            <input type="text" name="room_title" placeholder="Standard Family Room" value="" />
                                         </div>
-                                        <div class="col-sm-6">
+                                        <div class="col-sm-4">
                                             <label>Additional Room:
                                                 <span class="dec-icon"><i class="fal fa-layer-plus"></i></span></label>
-                                            <input type="text" name="additional_room[]" placeholder="Example: Sauna" value="" />
+                                            <input type="text" name="additional_room" placeholder="Example: Sauna" value="" />
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <label>Room area:
+                                                <span class="dec-icon"><i class="fal fa-layer-plus"></i></span></label>
+                                            <input type="text" name="area" placeholder="in m²" value="" />
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <label>Room Details</label>
                                             <div class="listsearch-input-item">
-                                                <textarea cols="40" name="room_desc[]" rows="3" style="height: 175px; margin-bottom: 10px" placeholder="Datails" spellcheck="false"></textarea>
+                                                <textarea cols="40" name="room_desc" rows="3" style="height: 175px; margin-bottom: 10px" placeholder="Datails" spellcheck="false"></textarea>
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
@@ -244,7 +219,7 @@ $action = new query();
                                 </div>
                                 <!--add_room-item end  -->
                             </div>
-                            <a href="#" class="add-room-item">Add Room <i class="fal fa-plus"></i> </a>
+
                         </div>
                     </div>
                     <a onclick="addListing();" class="btn  color-bg float-btn">Save Changes </a>

@@ -4,6 +4,7 @@ $listing_data = new query();
 if (isset($_GET['id'])) {
     $listind_id = $_GET['id'];
     $this_listing = $listing_data->fetchData("listings", "*", "id=$listind_id");
+    $images = explode(",", $this_listing[0]['image']);
 }
 ?>
 <!-- header end  -->
@@ -13,7 +14,7 @@ if (isset($_GET['id'])) {
     <div class="content">
         <section class="hidden-section   single-hero-section" data-scrollax-parent="true" id="sec1">
             <div class="bg-wrap bg-parallax-wrap-gradien">
-                <div class="bg par-elem " data-bg="images/bg/1.jpg" data-scrollax="properties: { translateY: '30%' }"></div>
+                <div class="bg par-elem " data-bg="<?php echo "img/" . $images[0]; ?>" data-scrollax="properties: { translateY: '30%' }"></div>
             </div>
             <div class="container">
                 <!--  list-single-opt_header-->
@@ -103,66 +104,27 @@ if (isset($_GET['id'])) {
                             <div class="list-single-main-media fl-wrap" id="sec2">
                                 <!-- gallery-items   -->
                                 <div class="gallery-items grid-small-pad  list-single-gallery three-coulms lightgallery">
-                                    <!-- 1 -->
-                                    <div class="gallery-item ">
-                                        <div class="grid-item-holder">
-                                            <div class="box-item">
-                                                <img src="images/all/1.jpg" alt="">
-                                                <a href="images/all/1.jpg" class="gal-link popup-image"><i class="fa fa-search"></i></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- 1 end -->
-                                    <!-- 2 -->
-                                    <div class="gallery-item">
-                                        <div class="grid-item-holder">
-                                            <div class="box-item">
-                                                <img src="images/all/1.jpg" alt="">
-                                                <a href="images/all/1.jpg" class="gal-link popup-image"><i class="fa fa-search"></i></a>
-                                            </div>
-                                        </div>
-                                    </div>
 
-                                    <!-- 2 end -->
-                                    <!-- 3 -->
-                                    <div class="gallery-item gallery-item-second">
-                                        <div class="grid-item-holder">
-                                            <div class="box-item">
-                                                <img src="images/all/1.jpg" alt="">
-                                                <a href="images/all/1.jpg" class="gal-link popup-image"><i class="fa fa-search"></i></a>
+
+                                    <?php for ($i = 0; $i < count($images); $i++) {
+                                        $class = "gallery-item";
+                                        if ($i == 1) {
+                                            $class = "gallery-item gallery-item-second";
+                                        }
+                                        echo   "<div class=\"{$class}\">
+                                        <div class=\"grid-item-holder\">
+                                            <div class=\"box-item\">
+                                                <img src=\"img/{$images[$i]}\" alt=\"\" />
+                                                <a href=\"img/{$images[$i]}\" class=\"gal-link popup-image\"><i class=\"fa fa-search\"></i></a>
                                             </div>
                                         </div>
-                                    </div>
-                                    <!-- 3 end -->
-                                    <!-- 4 -->
-                                    <div class="gallery-item">
-                                        <div class="grid-item-holder">
-                                            <div class="box-item">
-                                                <img src="images/all/1.jpg" alt="">
-                                                <a href="images/all/1.jpg" class="gal-link popup-image"><i class="fa fa-search"></i></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- 4 end -->
-                                    <!-- 5 -->
-                                    <div class="gallery-item">
-                                        <div class="grid-item-holder">
-                                            <div class="box-item">
-                                                <img src="images/all/1.jpg" alt="">
-                                                <a href="images/all/1.jpg" class="gal-link popup-image"><i class="fa fa-search"></i></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- 5 end -->
-                                    <!-- 7 -->
-                                    <div class="gallery-item">
-                                        <div class="grid-item-holder">
-                                            <div class="box-item">
-                                                <img src="images/all/1.jpg" alt="">
-                                                <a href="images/all/1.jpg" class="gal-link popup-image"><i class="fa fa-search"></i></a>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    </div>";
+
+                                        //echo "img/" . $images[0];
+                                    } ?>
+
+
+
                                     <!-- 7 end -->
                                 </div>
                                 <!-- end gallery items -->
@@ -199,8 +161,8 @@ if (isset($_GET['id'])) {
                                         <h3>About This Listing</h3>
                                     </div>
                                     <div class="list-single-main-item_content fl-wrap">
-                                        <p>Praesent eros turpis, commodo vel justo at, pulvinar mollis eros. Mauris aliquet eu quam id ornare. Morbi ac quam enim. Cras vitae nulla condimentum, semper dolor non, faucibus dolor. Vivamus adipiscing eros quis orci fringilla, sed pretium lectus viverra. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec nec velit non odio aliquam suscipit. Sed non neque faucibus, condimentum lectus at, accumsan enim. </p>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in pulvinar neque. Nulla finibus lobortis pulvinar. Donec a consectetur nulla. Nulla posuere sapien vitae lectus suscipit, et pulvinar nisi tincidunt. Aliquam erat volutpat. Curabitur convallis fringilla diam sed aliquam. Sed tempor iaculis massa faucibus feugiat. In fermentum facilisis massa, a consequat purus viverra.</p>
+                                        <p><?php echo $this_listing[0]['description']; ?></p>
+
                                         <a href="#" class="btn float-btn color-bg">Visit Website</a>
                                     </div>
                                 </div>
@@ -247,9 +209,17 @@ if (isset($_GET['id'])) {
                                         ?>
                                             <div class="rooms-item fl-wrap">
                                                 <div class="rooms-media">
-                                                    <img src="<?php echo $value['image']; ?>" alt="">
+                                                    <img src="img/<?php echo explode(",", $value['image'])[0]; ?>" alt="">
 
-                                                    <div class="dynamic-gal more-photos-button color-bg" data-dynamicPath="[<?php echo "{'src': '{$value['image']}'}"; ?>]"><i class="fas fa-camera"></i> <span><?php echo "1"; ?> photos</span> </div>
+                                                    <div class="dynamic-gal more-photos-button color-bg" data-dynamicPath="[<?php
+                                                                                                                            $img_arr = array();
+                                                                                                                            for ($i = 0; $i < count(explode(",", $value['image'])); $i++) {
+                                                                                                                                $img = explode(",", $value['image'])[$i];
+                                                                                                                                $img_arr[] = "{'src': 'img/{$img}'}";
+                                                                                                                                //explode(",", $value['image'])[$i];
+                                                                                                                            }
+                                                                                                                            //$img_arr = ["{'src': 'img/{$Imhg}'}", "{'src': 'img/{$Imhg}'}"];
+                                                                                                                            echo implode(",", $img_arr); ?>]"><i class="fas fa-camera"></i> <span><?php echo count(explode(",", $value['image'])); ?> photos</span> </div>
                                                 </div>
                                                 <div class="rooms-details">
                                                     <div class="rooms-details-header fl-wrap">
@@ -257,14 +227,25 @@ if (isset($_GET['id'])) {
                                                         <h3><?php echo $value['name']; ?></h3>
                                                         <h5>Additional Rooms: <span>Guest Bath</span></h5>
                                                     </div>
-                                                    <p><?php echo $value['description']; ?></p>
+                                                    <p><?php if (strlen($value['description'] > 130)) {
+                                                            echo substr($value['description'], 0, 130) . "...";
+                                                        } else {
+                                                            echo $value['description'];
+                                                        } ?></p>
                                                     <div class="facilities-list fl-wrap">
                                                         <ul>
-                                                            <?php foreach ($listing_data->fetchData("available_facilities", "*", "parent_id={$value['id']} and `for`='rooms'", "", "", "", 4) as $key => $value) {
+
+                                                            <?php
+                                                            $room_facilities = explode(",", $value['facilities']);
+                                                            foreach ($room_facilities as $key) {
 
                                                             ?>
-                                                                <?php $id = $value['fac_id'];
-                                                                echo "<li class=\"tolt\" data-microtip-position=\"top\" data-tooltip=\"{$listing_data->fetchData('facilities', '*', "id={$id}")[0]['name']}\">{$listing_data->fetchData('facilities', '*', "id={$id}")[0]['icon']}</li>"; ?>
+                                                                <?php
+
+                                                                $id = $key;
+                                                                echo "<li class=\"tolt\" data-microtip-position=\"top\" data-tooltip=\"{$listing_data->fetchData('facilities', '*', "id={$id}")[0]['name']}\">{$listing_data->fetchData('facilities', '*', "id={$id}")[0]['icon']}</li>";
+
+                                                                ?>
 
                                                             <?php } ?>
                                                         </ul>
@@ -279,26 +260,34 @@ if (isset($_GET['id'])) {
                                     </div>
                                     <!--   rooms-container end -->
                                 </div>
-                                <!-- list-single-main-item end -->
-                                <!-- list-single-main-item -->
+
                                 <div class="list-single-main-item fl-wrap">
                                     <div class="list-single-main-item-title">
                                         <h3>Floor Plans</h3>
                                     </div>
                                     <?php $floor_plans = $listing_data->fetchData("floor_plans", "*", "parent_id={$listing_id}");
                                     for ($i = 0; $i < count($floor_plans); $i++) {
-
-                                    ?>
-                                        <div class="accordion ">
-                                            <a class="toggle " href="#"> <?php echo $floor_plans[$i]['name']; ?> <strong><?php echo $floor_plans[$i]['area']; ?> sq ft</strong> <span></span> </a>
-                                            <div class="accordion-inner <?php if ($i == 0) {
-                                                                            echo "visible";
-                                                                        } ?>">
-                                                <img src="<?php echo $floor_plans[$i]['image']; ?>" alt="">
-                                                <p><?php echo $floor_plans[$i]['description']; ?></p>
-                                            </div>
+                                        if ($i == 0) {
+                                            $floor_class = "accordion-inner visible";
+                                        } else {
+                                            $floor_class = "accordion-inner";
+                                        }
+                                        echo " <div class=\"accordion\">
+                                        <a class=\"toggle act-accordion\" href=\"#\">
+                                          First Floor Plan <strong>{$floor_plans[$i]["area"]} sq mt</strong>
+                                          <span></span>
+                                        </a>
+                                        <div class=\"{$floor_class}\">
+                                          <img src=\"img/{$floor_plans[$i]["image"]}\" alt=\"\" />
+                                          <p>
+                                          {$floor_plans[$i]["description"]}
+                                          </p>
                                         </div>
-                                    <?php } ?>
+                                      </div>";
+                                    }
+                                    ?>
+
+
                                 </div>
                                 <!-- list-single-main-item end -->
                                 <!-- list-single-main-item -->
@@ -317,14 +306,17 @@ if (isset($_GET['id'])) {
                                 <!-- list-single-main-item -->
                                 <div class="list-single-main-item fl-wrap">
                                     <div class="list-single-main-item-title">
-                                        <h3>Features</h3>
+                                        <h3>Facilities</h3>
                                     </div>
                                     <div class="list-single-main-item_content fl-wrap">
                                         <div class="listing-features ">
                                             <ul>
                                                 <?php
-                                                foreach ($listing_data->fetchData("available_facilities", "*", "parent_id={$listing_id} and `for`='listings'") as $key => $value) {
-                                                    echo "<li><a href=\"#\">{$listing_data->fetchData("facilities", "*", "id={$value['fac_id']}")[0]['icon']} {$listing_data->fetchData("facilities", "*", "id={$value['fac_id']}")[0]['name']}</a></li>";
+                                                $facilities = explode(",", $this_listing[0]['facilities']);
+
+
+                                                foreach ($facilities as $key => $id) {
+                                                    echo "<li><a href=\"#\">{$listing_data->fetchData("facilities", "*", "id={$id}")[0]['icon']} {$listing_data->fetchData("facilities", "*", "id={$id}")[0]['name']}</a></li>";
                                                 } ?>
 
                                             </ul>
@@ -484,42 +476,30 @@ if (isset($_GET['id'])) {
                                 <!--widget-posts-->
                                 <div class="widget-posts  fl-wrap">
                                     <ul class="no-list-style">
-                                        <li>
-                                            <div class="widget-posts-img"><a href="listing-single.html"><img src="images/all/small/1.jpg" alt=""></a>
+                                        <?php
+
+                                        foreach ($listing_data->fetchData("listings") as $key => $value) {
+                                            $listing_images = explode(",", $value['image']);
+                                            if ($value['type'] == "Sale") {
+                                                $price_after = " /-";
+                                            } else {
+                                                $price_after = "/ per month";
+                                            }
+                                            $listing = "  <li>
+                                            <div class=\"widget-posts-img\"><a href=\"listing-single.html\"><img src=\"img/{$listing_images[0]}\" alt=\"\"></a>
                                             </div>
-                                            <div class="widget-posts-descr">
-                                                <h4><a href="listing-single.html">Affordable Urban Room</a></h4>
-                                                <div class="geodir-category-location fl-wrap"><a href="#"><i class="fas fa-map-marker-alt"></i> 40 Journal Square , NJ, USA</a></div>
-                                                <div class="widget-posts-descr-price"><span>Price: </span> $ 1500 / per month</div>
+                                            <div class=\"widget-posts-descr\">
+                                                <h4><a href=\"listing-single.html\">{$value['title']}</a></h4>
+                                                <div class=\"geodir-category-location fl-wrap\"><a href=\"#\"><i class=\"fas fa-map-marker-alt\"></i> {$value['address']}</a></div>
+                                                <div class=\"widget-posts-descr-price\"><span>Price: </span> $ {$value['price']}{$price_after}</div>
                                             </div>
-                                        </li>
-                                        <li>
-                                            <div class="widget-posts-img"><a href="listing-single.html"><img src="images/all/small/1.jpg" alt=""></a>
-                                            </div>
-                                            <div class="widget-posts-descr">
-                                                <h4><a href="listing-single.html">Family House</a></h4>
-                                                <div class="geodir-category-location fl-wrap"><a href="#"><i class="fas fa-map-marker-alt"></i> 70 Bright St New York, USA </a></div>
-                                                <div class="widget-posts-descr-price"><span>Price: </span> $ 50000</div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="widget-posts-img"><a href="listing-single.html"><img src="images/all/small/1.jpg" alt=""></a>
-                                            </div>
-                                            <div class="widget-posts-descr">
-                                                <h4><a href="listing-single.html">Apartment to Rent</a></h4>
-                                                <div class="geodir-category-location fl-wrap"><a href="#"><i class="fas fa-map-marker-alt"></i>75 Prince St, NY, USA</a></div>
-                                                <div class="widget-posts-descr-price"><span>Price: </span> $100 / per night</div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="widget-posts-img"><a href="listing-single.html"><img src="images/all/small/1.jpg" alt=""></a>
-                                            </div>
-                                            <div class="widget-posts-descr">
-                                                <h4><a href="listing-single.html">Apartment to Rent</a></h4>
-                                                <div class="geodir-category-location fl-wrap"><a href="#"><i class="fas fa-map-marker-alt"></i>75 Prince St, NY, USA</a></div>
-                                                <div class="widget-posts-descr-price"><span>Price: </span> $100 / per night</div>
-                                            </div>
-                                        </li>
+                                        </li>";
+                                            echo $listing;
+                                        }
+
+                                        ?>
+
+
                                     </ul>
                                 </div>
                                 <!-- widget-posts end-->
@@ -528,39 +508,40 @@ if (isset($_GET['id'])) {
                         </div>
                         <!--box-widget end -->
                         <!--box-widget-->
-                        <div class="box-widget fl-wrap hidden-section" style="margin-top: 30px">
-                            <div class="box-widget-content fl-wrap color-bg">
-                                <div class="color-form reset-action">
-                                    <div class="color-form-title fl-wrap">
+                        <?php $calculator = " <div class=\"box-widget fl-wrap hidden-section\" style=\"margin-top: 30px\">
+                            <div class=\"box-widget-content fl-wrap color-bg\">
+                                <div class=\"color-form reset-action\">
+                                    <div class=\"color-form-title fl-wrap\">
                                         <h4>Calculate Your Mortgage</h4>
                                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc posuere convallis purus non cursus. </p>
                                     </div>
-                                    <form method="post" name="mortgage-form">
-                                        <div class="fl-wrap">
-                                            <label for="amt">Loan Amount </label>
-                                            <input id="amt" name="amt" type="text" placeholder="0" value="0">
-                                            <div class="use-current-price tolt" data-microtip-position="left" data-tooltip="Use current price"><i class="fal fa-tag"></i></div>
+                                    <form method=\"post\" name=\"mortgage-form\">
+                                        <div class=\"fl-wrap\">
+                                            <label for=\"amt\">Loan Amount </label>
+                                            <input id=\"amt\" name=\"amt\" type=\"text\" placeholder=\"0\" value=\"0\">
+                                            <div class=\"use-current-price tolt\" data-microtip-position=\"left\" data-tooltip=\"Use current price\"><i class=\"fal fa-tag\"></i></div>
                                         </div>
-                                        <label for="apr">Percentage rate</label>
-                                        <div class="price-rage-item fl-wrap">
-                                            <input type="text" id="apr" name="apr" class="price-range" data-min="0" data-max="100" data-step="1" value="0" data-prefix="%">
+                                        <label for=\"apr\">Percentage rate</label>
+                                        <div class=\"price-rage-item fl-wrap\">
+                                            <input type=\"text\" id=\"apr\" name=\"apr\" class=\"price-range\" data-min=\"0\" data-max=\"100\" data-step=\"1\" value=\"0\" data-prefix=\"%\">
                                         </div>
-                                        <label for="trm">Loan Term (Years) </label>
-                                        <div class="price-rage-item fl-wrap">
-                                            <input type="text" id="trm" name="trm" class="price-range" data-min="0" data-max="5" data-step="1" value="0" data-prefix="Y">
+                                        <label for=\"trm\">Loan Term (Years) </label>
+                                        <div class=\"price-rage-item fl-wrap\">
+                                            <input type=\"text\" id=\"trm\" name=\"trm\" class=\"price-range\" data-min=\"0\" data-max=\"5\" data-step=\"1\" value=\"0\" data-prefix=\"Y\">
                                         </div>
-                                        <div class="clearfix"></div>
-                                        <button type="button" id="sbt" class="color2-bg">Calculate</button>
-                                        <div class="reset-form reset-btn"> <i class="far fa-sync-alt"></i> Reset Form</div>
-                                        <div class="monterage-title fl-wrap">
+                                        <div class=\"clearfix\"></div>
+                                        <button type=\"button\" id=\"sbt\" class=\"color2-bg\">Calculate</button>
+                                        <div class=\"reset-form reset-btn\"> <i class=\"far fa-sync-alt\"></i> Reset Form</div>
+                                        <div class=\"monterage-title fl-wrap\">
                                             <h5>Monthly payment:</h5>
-                                            <input type="text" id="pmt" name="mPmt" value="0">
-                                            <div class="monterage-title-item">$<span></span></div>
+                                            <input type=\"text\" id=\"pmt\" name=\"mPmt\" value=\"0\">
+                                            <div class=\"monterage-title-item\">$<span></span></div>
                                         </div>
                                     </form>
                                 </div>
                             </div>
-                        </div>
+                        </div>";
+                        echo $calculator; ?>
                         <!--box-widget end -->
                         <!--box-widget-->
                         <div class="box-widget fl-wrap">

@@ -226,7 +226,7 @@ $action = new query();
                                         <span><i class="far fa-cloud-upload-alt"></i> Click here or drop files to upload</span>
                                         <div class="photoUpload-files fl-wrap"></div>
                                     </div>
-                                    <input type="file" name="header_media" class="upload" multiple>
+                                    <input type="file" name="header_media[]" class="upload" multiple>
                                 </div>
                             </div>
                         </div>
@@ -486,8 +486,13 @@ $action = new query();
 
             data: formData,
             success: function(response) {
-                console.log(response);
-
+                res = jQuery.parseJSON(response);
+                console.log(res);
+                if (res.status == 1) {
+                    if (res.type == "listing") {
+                        window.location.href = 'dashboard-add-listing.php?id=' + res.listing_id + "?msg=Listing added successfully";
+                    }
+                }
             },
             contentType: false,
             processData: false,
