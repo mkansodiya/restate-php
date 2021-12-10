@@ -219,7 +219,7 @@
 <script src="js/jquery.min.js"></script>
 <script src="js/plugins.js"></script>
 <script src="js/scripts.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAURpmDl_ttEqPjC6D1gCr1WCf5yZzinpM&libraries=places"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=your_api_key&libraries=places"></script>
 <script src="js/map-single.js"></script>
 </body>
 
