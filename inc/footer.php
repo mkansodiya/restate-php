@@ -117,12 +117,14 @@
                         <!--tab -->
                         <div id="tab-1" class="tab-content first-tab">
                             <div class="custom-form">
-                                <form method="post" name="registerform">
+                                <form method="post" name="login_form" id="mk_login_form" action="login.php">
+                                    <input name="type" type="text" value="login" style="display:none;">
                                     <label>Username or Email Address * <span class="dec-icon"><i class="fal fa-user"></i></span></label>
                                     <input name="email" type="text" placeholder="Your Name or Mail" onClick="this.select()" value="">
                                     <div class="pass-input-wrap fl-wrap">
                                         <label>Password * <span class="dec-icon"><i class="fal fa-key"></i></span></label>
                                         <input name="password" placeholder="Your Password" type="password" autocomplete="off" onClick="this.select()" value="">
+
                                         <span class="eye"><i class="fal fa-eye"></i> </span>
                                     </div>
                                     <div class="lost_password">
@@ -133,7 +135,7 @@
                                         <label for="check-a3">Remember me</label>
                                     </div>
                                     <div class="clearfix"></div>
-                                    <button type="submit" class="log_btn color-bg"> LogIn </button>
+                                    <button type="button" class="log_btn color-bg user_auth" id="mk_login_btn"> LogIn </button>
                                 </form>
                             </div>
                         </div>
@@ -142,9 +144,12 @@
                         <div class="tab">
                             <div id="tab-2" class="tab-content">
                                 <div class="custom-form">
-                                    <form method="post" name="registerform" class="main-register-form" id="main-register-form2">
-                                        <label>Full Name * <span class="dec-icon"><i class="fal fa-user"></i></span></label>
-                                        <input name="name" type="text" placeholder="Your Name" onClick="this.select()" value="">
+                                    <form method="post" action="login.php" name="registerform" class="main-register-form" id="mk_reg_form">
+                                        <label>First Name * <span class="dec-icon"><i class="fal fa-user"></i></span></label>
+                                        <input name="first_name" type="text" placeholder="First Name" onClick="this.select()" value="">
+                                        <label>Last Name * <span class="dec-icon"><i class="fal fa-user"></i></span></label>
+                                        <input name="last_name" type="text" placeholder="Last Name" onClick="this.select()" value="">
+                                        <input name="type" type="text" value="register" style="display:none;">
                                         <label>Email Address * <span class="dec-icon"><i class="fal fa-envelope"></i></span></label>
                                         <input name="email" type="text" placeholder="Your Mail" onClick="this.select()" value="">
                                         <div class="pass-input-wrap fl-wrap">
@@ -153,11 +158,11 @@
                                             <span class="eye"><i class="fal fa-eye"></i> </span>
                                         </div>
                                         <div class="filter-tags ft-list">
-                                            <input id="check-a2" type="checkbox" name="check">
+                                            <input id="check-a2" type="checkbox" name="terms">
                                             <label for="check-a2">I agree to the <a href="#">Privacy Policy</a> and <a href="#">Terms and Conditions</a></label>
                                         </div>
                                         <div class="clearfix"></div>
-                                        <button type="submit" class="log_btn color-bg"> Register </button>
+                                        <button type="button" class="log_btn color-bg user_auth" id="mk_reg_btn"> Register </button>
                                     </form>
                                 </div>
                             </div>
@@ -214,7 +219,7 @@
 <script src="js/jquery.min.js"></script>
 <script src="js/plugins.js"></script>
 <script src="js/scripts.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDwJSRi0zFjDemECmFl9JtRj1FY7TiTRRo&libraries=places"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAURpmDl_ttEqPjC6D1gCr1WCf5yZzinpM&libraries=places"></script>
 <script src="js/map-single.js"></script>
 </body>
 

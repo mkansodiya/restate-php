@@ -18,8 +18,6 @@ $query = new query();
 //     $f_tag_name[] = $d->fetchData("features", "tag_name")[$i]['tag_name'];
 // }
 // echo $d->fetchData("features", "tag_name")[0]['tag_name'];
-for ($i = 0; $i < count($query->fetchData("features", "tag_name")); $i++) {
-    $f_tag_name = $query->fetchData("features", "tag_name")[$i]['tag_name'];
-    $f_tag_id = $query->fetchData("features", "id", "tag_name='{$f_tag_name}'")[0]['id'];
-    echo $f_tag_id;
-}
+$user_info = new userAuth();
+$user_info = $user_info->logedUserInfo();
+print_r($user_info);

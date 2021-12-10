@@ -1,4 +1,129 @@
 //   all ------------------
+$("#log_out").on("click", function () {
+  var postData = "action=logout";
+  $.ajax({
+    url: "./logout.php",
+    data: postData,
+    type: "POST",
+    contentType: false,
+    processData: false,
+    caches: false,
+    success: function (response) {},
+  });
+});
+
+$("#mk_login_btn").on("click", function () {
+  var formData = $("#mk_login_form").submit(function (e) {
+    e.preventDefault();
+    return;
+  });
+  formData = new FormData(formData[0]);
+  $("#mk_login_btn").html('Authenticating <i class="fas fa-sync fa-spin"></i>');
+  $(this).css("opacity", "0.6");
+  //$(this).prop("disabled", true);
+  $.ajax({
+    type: "POST",
+    data: formData,
+    url: $("#mk_login_form").attr("action"),
+    contentType: false,
+    processData: false,
+    cache: false,
+    success: function (response) {
+      response = jQuery.parseJSON(response);
+      console.log(response);
+      if (response.status == 1) {
+        $("#mk_login_btn").html(
+          'Login Successful <i class="fas fa-check"></i>'
+        );
+        $(this).css("opacity", "1");
+        setTimeout(function () {
+          location.reload();
+        }, 1500);
+      } else {
+        $("#mk_login_btn").html('Wrong Info <i class="fas fa-check"></i>');
+        $("#mk_login_btn").css("opacity", "1");
+        setTimeout(function () {
+          $("#mk_login_btn").html("Login");
+        }, 1000);
+      }
+    },
+  });
+});
+$("#mk_reg_btn").on("click", function () {
+  var formData = $("#mk_reg_form").submit(function (e) {
+    e.preventDefault();
+    return;
+  });
+  formData = new FormData(formData[0]);
+  $("#mk_reg_btn").html('Sending data <i class="fas fa-sync fa-spin"></i>');
+  $(this).css("opacity", "0.6");
+  //$(this).prop("disabled", true);
+  $.ajax({
+    type: "POST",
+    data: formData,
+    url: $("#mk_reg_form").attr("action"),
+    contentType: false,
+    processData: false,
+    cache: false,
+    success: function (response) {
+      response = jQuery.parseJSON(response);
+      console.log(response);
+      if (response.status == 1) {
+        $("#mk_reg_btn").html(
+          'Registration Successful <i class="fas fa-check"></i>'
+        );
+        $(this).css("opacity", "1");
+        setTimeout(function () {
+          location.reload();
+        }, 1500);
+      } else {
+        $("#mk_reg_btn").html(
+          response.msg + ' <i class="fas fa-times" style"color:red;"></i>'
+        );
+        $("#mk_reg_btn").css("opacity", "1");
+        setTimeout(function () {
+          $("#mk_reg_btn").html("Register");
+        }, 1000);
+      }
+    },
+  });
+});
+$("#pub-listing").on("click", function () {
+  var formData = $("#listing_form").submit(function (e) {
+    e.preventDefault();
+    return;
+  });
+
+  var formData = new FormData(formData[0]);
+
+  $.ajax({
+    url: $("#listing_form").attr("action"),
+    type: "POST",
+
+    data: formData,
+    success: function (response) {
+      res = jQuery.parseJSON(response);
+      console.log(res);
+      if (res.status == 1) {
+        if (res.type == "listing") {
+          window.location.href =
+            "dashboard-add-listing.php?id=" +
+            res.listing_id +
+            "?msg=Listing added successfully";
+        } else if (res.type == "room") {
+          $("#listing_form").trigger("reset");
+          $("#msg").show();
+          $("#msg").text("Room Added successfully");
+        }
+      }
+    },
+    contentType: false,
+    processData: false,
+    cache: false,
+  });
+  return false;
+});
+
 function initHomeradar() {
   "use strict";
   $("head").append(

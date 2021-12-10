@@ -412,27 +412,29 @@
                                                 </div>
                                                 <!-- Add Review Box -->
                                                 <div id="add-review" class="add-review-box">
-                                                    <div class="leave-rating-wrap">
-                                                        <span class="leave-rating-title">Your rating for this listing : </span>
-                                                        <div class="leave-rating">
-                                                            <input type="radio" data-ratingtext="Excellent" name="rating" id="rating-1" value="1" />
-                                                            <label for="rating-1" class="fal fa-star"></label>
-                                                            <input type="radio" data-ratingtext="Good" name="rating" id="rating-2" value="2" />
-                                                            <label for="rating-2" class="fal fa-star"></label>
-                                                            <input type="radio" name="rating" data-ratingtext="Average" id="rating-3" value="3" />
-                                                            <label for="rating-3" class="fal fa-star"></label>
-                                                            <input type="radio" data-ratingtext="Fair" name="rating" id="rating-4" value="4" />
-                                                            <label for="rating-4" class="fal fa-star"></label>
-                                                            <input type="radio" data-ratingtext="Very Bad " name="rating" id="rating-5" value="5" />
-                                                            <label for="rating-5" class="fal fa-star"></label>
+                                                    <form class="add-comment custom-form" method="get">
+                                                        <div class="leave-rating-wrap">
+                                                            <span class="leave-rating-title">Your rating for this listing : </span>
+                                                            <div class="leave-rating">
+                                                                <input type="radio" onClick="this.select()" data-ratingtext="Excellent" name="rating" id="rating-1" value="1" />
+                                                                <label for="rating-1" class="fal fa-star"></label>
+                                                                <input type="radio" data-ratingtext="Good" name="rating" id="rating-2" value="2" />
+                                                                <label for="rating-2" class="fal fa-star"></label>
+                                                                <input type="radio" name="rating" data-ratingtext="Average" id="rating-3" value="3" />
+                                                                <label for="rating-3" class="fal fa-star"></label>
+                                                                <input type="radio" data-ratingtext="Fair" name="rating" id="rating-4" value="4" />
+                                                                <label for="rating-4" class="fal fa-star"></label>
+                                                                <input type="radio" data-ratingtext="Very Bad " name="rating" id="rating-5" value="5" />
+                                                                <label for="rating-5" class="fal fa-star"></label>
+                                                            </div>
+                                                            <div class="count-radio-wrapper">
+                                                                <span id="count-checked-radio">Your Rating</span>
+                                                            </div>
                                                         </div>
-                                                        <div class="count-radio-wrapper">
-                                                            <span id="count-checked-radio">Your Rating</span>
-                                                        </div>
-                                                    </div>
-                                                    <!-- Review Comment -->
-                                                    <form class="add-comment custom-form">
+                                                        <!-- Review Comment -->
+
                                                         <fieldset>
+
                                                             <div class="row">
                                                                 <div class="col-md-6">
                                                                     <label>Your name* <span class="dec-icon"><i class="fas fa-user"></i></span></label>
@@ -445,7 +447,8 @@
                                                             </div>
                                                             <textarea cols="40" rows="3" placeholder="Your Review:"></textarea>
                                                         </fieldset>
-                                                        <button class="btn big-btn color-bg float-btn">Submit Review <i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+                                                        <button class="btn big-btn color-bg float-btn">Submit Review <i class="fa fa-paper-plane-o" aria-hidden="true"></i></button> -->
+                                                        <input type="submit" value="Submit">
                                                     </form>
                                                 </div>
                                                 <!-- Add Review Box / End -->

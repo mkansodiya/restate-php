@@ -92,7 +92,7 @@ $fetch = new query();
                 <div class="clearfix"></div>
                 <!-- grid-item-holder-->
                 <div class="grid-item-holder gallery-items gisp fl-wrap">
-                    <?php foreach ($fetch->fetchData("listings") as $key => $value) {
+                    <?php foreach ($fetch->fetchData("listings", "*", "", "", "id", "DESC", 6) as $key => $value) {
 
                     ?>
                         <!-- gallery-item-->
@@ -102,7 +102,7 @@ $fetch = new query();
                                 <article class="geodir-category-listing fl-wrap">
                                     <div class="geodir-category-img fl-wrap">
                                         <a href="listing-single.php?id=<?php echo $value['id']; ?>" class="geodir-category-img_item">
-                                            <img src="images/all/1.jpg" alt="">
+                                            <img src="<?php echo "img/" . $fetch->getImages($listings, "id={$value['id']}")[0]; ?>" alt="">
                                             <div class="overlay"></div>
                                         </a>
                                         <div class="geodir-category-location">

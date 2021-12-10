@@ -1,4 +1,8 @@
-<?php include('inc/functions.php'); ?>
+<?php include('inc/functions.php');
+$user_info = new userAuth();
+$user_info = $user_info->logedUserInfo();
+
+?>
 <!DOCTYPE HTML>
 <html lang="en">
 
@@ -64,25 +68,38 @@
                 <span><i class="fal fa-globe"></i></span>
             </div>
             <!--  header-opt_btn end -->
-            <!--  cart-btn   -->
+            <!--  tn_tn   -->
             <div class="cart-btn  tolt show-header-modal" data-microtip-position="bottom" data-tooltip="Your Wishlist / Compare">
                 <i class="fal fa-bell"></i>
                 <span class="cart-btn_counter color-bg">5</span>
             </div>
             <!--  cart-btn end -->
             <!--  login btn -->
-            <div class="show-reg-form dasbdord-submenu-open"><img src="images/avatar/1.jpg" alt=""></div>
+            <?php
+            $full_name = ucfirst($user_info['first_name']) . " " . $user_info['last_name'];
+            $login_icon = "<div class=\"show-reg-form modal-open\"><i class=\"fas fa-user\"></i><span>Sign In</span></div>";
+            $profile_icon = "<div class=\"show-reg-form dasbdord-submenu-open\"><img src=\"images/avatar/1.jpg\" alt=\"\"></div>";
+            $user_menu = "<div class=\"dashboard-submenu\">
+            <div class=\"dashboard-submenu-title fl-wrap\">Welcome , <span>{$full_name}</span></div>
+            <ul>
+                <li><a href=\"dashboard.php\"><i class=\"fal fa-chart-line\"></i>Dashboard</a></li>
+                <li><a href=\"dashboard-add-listing.php\"> <i class=\"fal fa-file-plus\"></i>Add Listing</a></li>
+                <li><a href=\"dashboard-myprofile.php\"><i class=\"fal fa-user-edit\"></i>Settings</a></li>
+            </ul>
+            <a href=\"index.php\" class=\"color-bg db_log-out\" id=\"log_out\"><i class=\"far fa-power-off\" ></i> Log Out</a>
+        </div>";
+            if ($_SESSION['user_id']) {
+                echo $profile_icon;
+                echo $user_menu;
+            } else {
+                echo $login_icon;
+            }
+            ?>
+
+
             <!--  login btn  end -->
             <!--  dashboard-submenu-->
-            <div class="dashboard-submenu">
-                <div class="dashboard-submenu-title fl-wrap">Welcome , <span>Alica Noory</span></div>
-                <ul>
-                    <li><a href="dashboard.php"><i class="fal fa-chart-line"></i>Dashboard</a></li>
-                    <li><a href="dashboard-add-listing.php"> <i class="fal fa-file-plus"></i>Add Listing</a></li>
-                    <li><a href="dashboard-myprofile.php"><i class="fal fa-user-edit"></i>Settings</a></li>
-                </ul>
-                <a href="index.php" class="color-bg db_log-out"><i class="far fa-power-off"></i> Log Out</a>
-            </div>
+
             <!--  dashboard-submenu  end -->
             <!--  navigation -->
             <div class="nav-holder main-menu">

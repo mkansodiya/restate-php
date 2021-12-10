@@ -99,11 +99,11 @@ if ($listing_type != "room") {
     for ($i = 0; $i < count($plan_title); $i++) {
         $data = ["parent_id" => $listing_id, "name" => $plan_title[$i], "description" => $plan_desc[$i], "image" => $plan_images[$i], "area" => $plan_area[$i], "added_on" => date("y-m-d H:i:s")];
         $floor_plan_insert = $query->insert("floor_plans", $data);
+        move_uploaded_file($plan_img_tmp[$i], "img/" . $plan_images[$i]);
     }
     if (!$listing_id) {
-        echo "Query failed";
+        $response = ["type" => "listing", "status" => 0, "listing_id" => $listing_id];
     } else {
-        move_uploaded_file($plan_img_tmp[$i], "img/" . $plan_images[$i]);
     }
     $response = ["type" => "listing", "status" => 1, "listing_id" => $listing_id];
     echo json_encode($response);
@@ -137,6 +137,10 @@ if ($listing_type != "room") {
 
     $data = ["name" => $room_title, "image" => $room_images, "facilities" => $room_facilities, "description" => $room_desc, "area" => $room_area, "parent_id" => $parent_id, "added_on" => date("y-m-d H:i:s")];
     $room_id = $query->insert("rooms", $data);
+    if ($room_id) {
+        $response = ["type" => "room", "status" => 1, "listing_id" => $listing_id];
+        echo json_encode($response);
+    }
 }
 // if ($listing_type == "room") {
 

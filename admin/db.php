@@ -1,5 +1,6 @@
 <?php
 // $con = new PDO("mysql:host=localhost;dbname=restate;", "root", "");
+session_start();
 class database
 {
     private $host;

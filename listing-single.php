@@ -108,7 +108,7 @@ if (isset($_GET['id'])) {
 
                                     <?php for ($i = 0; $i < count($images); $i++) {
                                         $class = "gallery-item";
-                                        if ($i == 1) {
+                                        if ($i == 2) {
                                             $class = "gallery-item gallery-item-second";
                                         }
                                         echo   "<div class=\"{$class}\">
@@ -347,30 +347,37 @@ if (isset($_GET['id'])) {
                                             <!-- reviews-comments-item -->
                                             <?php
                                             foreach ($listing_data->fetchData('reviews', "*", "parent_id={$listing_id}") as $key => $value) {
-
-                                            ?>
-                                                <div class="reviews-comments-item">
-                                                    <div class="review-comments-avatar">
-                                                        <img src="<?php if (isset($listing_data->fetchData("users", "*", "id={$value['author_id']}")[0]['image'])) {
-                                                                        echo $listing_data->fetchData("users", "*", "id={$value['author_id']}")[0]['image'];
-                                                                    } else {
-                                                                        echo "http://www.goodmorningimagesdownload.com/wp-content/uploads/2020/05/No-Whatsapp-Dp-Images-1.jpg";
-                                                                    } ?>" alt="">
-                                                    </div>
-                                                    <div class=" reviews-comments-item-text smpar">
-                                                        <div class="box-widget-menu-btn smact"><i class="far fa-ellipsis-h"></i></div>
-                                                        <div class="show-more-snopt-tooltip bxwt">
-                                                            <a href="#"> <i class="fas fa-reply"></i> Reply</a>
-                                                            <a href="#"> <i class="fas fa-exclamation-triangle"></i> Report </a>
-                                                        </div>
-                                                        <h4><a href="#"><?php echo ucfirst($listing_data->fetchData("users", "*", "id={$value['author_id']}")[0]['first_name']); ?> </a></h4>
-                                                        <div class="listing-rating card-popup-rainingvis" data-starrating2="3"><span class="re_stars-title">Average</span></div>
-                                                        <div class="clearfix"></div>
-                                                        <p>" <?php echo $value['content']; ?> "</p>
-                                                        <div class="reviews-comments-item-date"><span class="reviews-comments-item-date-item"><i class="far fa-calendar-check"></i><?php echo date('d F, Y', strtotime($value['added_on'])); ?></span><a href="#" class="rate-review"><i class="fal fa-thumbs-up"></i> Helpful Review <span><?php echo $value['helpful_count']; ?> </span> </a></div>
-                                                    </div>
+                                                $author_avatar = "";
+                                                if (isset($listing_data->fetchData("users", "*", "id={$value['author_id']}")[0]['image'])) {
+                                                    $author_avatar = $listing_data->fetchData("users", "*", "id={$value['author_id']}")[0]['image'];
+                                                } else {
+                                                    $author_avatar = "http://www.goodmorningimagesdownload.com/wp-content/uploads/2020/05/No-Whatsapp-Dp-Images-1.jpg";
+                                                }
+                                                $author_name = ucfirst($listing_data->fetchData("users", "*", "id={$value['author_id']}")[0]['first_name']);
+                                                $date = date('d F, Y', strtotime($value['added_on']));
+                                                $helpful_count = $value['helpful_count'];
+                                                $rating_comment = $listing_data->commentRatingText($value['id']);
+                                                $comment = "<div class=\"reviews-comments-item\">
+                                                <div class=\"review-comments-avatar\">
+                                                    <img src=\"{$author_avatar}\" alt=\"\">
                                                 </div>
-                                            <?php } ?>
+                                                <div class=\" reviews-comments-item-text smpar\">
+                                                    <div class=\"box-widget-menu-btn smact\"><i class=\"far fa-ellipsis-h\"></i></div>
+                                                    <div class=\"show-more-snopt-tooltip bxwt\">
+                                                        <a href=\"#\"> <i class=\"fas fa-reply\"></i> Reply</a>
+                                                        <a href=\"#\"> <i class=\"fas fa-exclamation-triangle\"></i> Report </a>
+                                                    </div>
+                                                    <h4><a href=\"#\">{$author_name} </a></h4>
+                                                    <div class=\"listing-rating card-popup-rainingvis\" data-starrating2=\"{$value['rating']}\"><span class=\"re_stars-title\">{$rating_comment}</span></div>
+                                                    <div class=\"clearfix\"></div>
+                                                    <p>\" {$value['content']}  \"</p>
+                                                    <div class=\"reviews-comments-item-date\"><span class=\"reviews-comments-item-date-item\"><i class=\"far fa-calendar-check\"></i>{$date}</span><a href=\"#\" class=\"rate-review\"><i class=\"fal fa-thumbs-up\"></i> Helpful Review <span>{$helpful_count}</span> </a></div>
+                                                </div>
+                                                </div>";
+                                                echo $comment;
+                                            }
+                                            ?>
+
                                             <!--reviews-comments-item end-->
 
                                         </div>
@@ -383,43 +390,45 @@ if (isset($_GET['id'])) {
                                         <h3>Add Your Review</h3>
                                     </div>
                                     <!-- Add Review Box -->
-                                    <div id="add-review" class="add-review-box">
-                                        <div class="leave-rating-wrap">
-                                            <span class="leave-rating-title">Your rating for this listing : </span>
-                                            <div class="leave-rating">
-                                                <input type="radio" data-ratingtext="Excellent" name="rating" id="rating-1" value="1" />
-                                                <label for="rating-1" class="fal fa-star"></label>
-                                                <input type="radio" data-ratingtext="Good" name="rating" id="rating-2" value="2" />
-                                                <label for="rating-2" class="fal fa-star"></label>
-                                                <input type="radio" name="rating" data-ratingtext="Average" id="rating-3" value="3" />
-                                                <label for="rating-3" class="fal fa-star"></label>
-                                                <input type="radio" data-ratingtext="Fair" name="rating" id="rating-4" value="4" />
-                                                <label for="rating-4" class="fal fa-star"></label>
-                                                <input type="radio" data-ratingtext="Very Bad " name="rating" id="rating-5" value="5" />
-                                                <label for="rating-5" class="fal fa-star"></label>
+                                    <form>
+                                        <div id="add-review" class="add-review-box">
+                                            <div class="leave-rating-wrap">
+                                                <span class="leave-rating-title">Your rating for this listing : </span>
+                                                <div class="leave-rating">
+                                                    <input type="radio" data-ratingtext="Excellent" name="rating" id="rating-1" value="5" />
+                                                    <label for="rating-1" class="fal fa-star"></label>
+                                                    <input type="radio" data-ratingtext="Good" name="rating" id="rating-2" value="4" />
+                                                    <label for="rating-2" class="fal fa-star"></label>
+                                                    <input type="radio" name="rating" data-ratingtext="Average" id="rating-3" value="3" />
+                                                    <label for="rating-3" class="fal fa-star"></label>
+                                                    <input type="radio" data-ratingtext="Fair" name="rating" id="rating-4" value="2" />
+                                                    <label for="rating-4" class="fal fa-star"></label>
+                                                    <input type="radio" data-ratingtext="Very Bad " name="rating" id="rating-5" value="1" />
+                                                    <label for="rating-5" class="fal fa-star"></label>
+                                                </div>
+                                                <div class="count-radio-wrapper">
+                                                    <span id="count-checked-radio">Your Rating</span>
+                                                </div>
                                             </div>
-                                            <div class="count-radio-wrapper">
-                                                <span id="count-checked-radio">Your Rating</span>
+                                            <!-- Review Comment -->
+                                            <div class="add-comment custom-form">
+                                                <fieldset>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <label>Your name* <span class="dec-icon"><i class="fas fa-user"></i></span></label>
+                                                            <input name="name" type="text" onClick="this.select()" value="">
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label>Yourmail* <span class="dec-icon"><i class="fas fa-envelope"></i></span></label>
+                                                            <input name="reviewwname" type="text" onClick="this.select()" value="">
+                                                        </div>
+                                                    </div>
+                                                    <textarea cols="40" rows="3" placeholder="Your Review:"></textarea>
+                                                </fieldset>
+                                                <button class="btn big-btn color-bg float-btn">Submit Review <i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
                                             </div>
                                         </div>
-                                        <!-- Review Comment -->
-                                        <form class="add-comment custom-form">
-                                            <fieldset>
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <label>Your name* <span class="dec-icon"><i class="fas fa-user"></i></span></label>
-                                                        <input name="phone" type="text" onClick="this.select()" value="">
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <label>Yourmail* <span class="dec-icon"><i class="fas fa-envelope"></i></span></label>
-                                                        <input name="reviewwname" type="text" onClick="this.select()" value="">
-                                                    </div>
-                                                </div>
-                                                <textarea cols="40" rows="3" placeholder="Your Review:"></textarea>
-                                            </fieldset>
-                                            <button class="btn big-btn color-bg float-btn">Submit Review <i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
-                                        </form>
-                                    </div>
+                                    </form>
                                     <!-- Add Review Box / End -->
                                 </div>
                                 <!-- list-single-main-item end -->

@@ -70,6 +70,26 @@ class query extends database
             echo "Excillent";
         }
     }
+    function commentRatingText($id)
+    {
+        $q = $this->connect()->prepare("SELECT rating FROM reviews WHERE id=?");
+        $q->bindParam(1, $id);
+        $q->execute();
+        $value = $q->fetch(PDO::FETCH_ASSOC)['rating'];
+        $text = "";
+        if ($value <= 1) {
+            $text = "Worst";
+        } else if ($value > 1 && $value <= 2) {
+            $text = "Bad";
+        } else if ($value > 2 && $value <= 3) {
+            $text = "Average";
+        } else if ($value > 3 && $value <= 4) {
+            $text = "Good";
+        } else if ($value > 4 && $value <= 5) {
+            $text = "Excillent";
+        }
+        return $text;
+    }
 
     function insert($table, $data)
     {
@@ -93,5 +113,37 @@ class query extends database
         } else {
             return $db->lastInsertId();
         }
+    }
+    function getImages($table, $condition = "")
+    {
+        if ($condition == "") {
+            $q = $this->connect()->prepare("SELECT `image` FROM $table");
+            $q->execute();
+            $images = $q->fetchAll(PDO::FETCH_ASSOC);
+            foreach ($images['image'] as $key) {
+                $images[] = $key;
+            }
+            return $images;
+        } else {
+            $q = $this->connect()->prepare("SELECT `image` FROM listings WHERE $condition");
+
+            // $q->bindParam(2, $condition);
+            $q->execute();
+            $images = $q->fetchAll(PDO::FETCH_ASSOC)[0]['image'];
+            // $images = explode(",", $images);
+            return explode(",", $images);
+        }
+    }
+}
+class userAuth extends database
+{
+    function logedUserInfo()
+    {
+        $user_id = $_SESSION['user_id'];
+        $q = $this->connect()->prepare("SELECT `first_name`,`last_name`,`image`,`role`,`email`,`verified`,`registered_on` FROM users WHERE id=?");
+        $q->bindParam(1, $user_id);
+        $q->execute();
+        $r = $q->fetch(PDO::FETCH_ASSOC);
+        return $r;
     }
 }

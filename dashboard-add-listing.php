@@ -1,49 +1,11 @@
 <?php include('inc/header.php');
 $action = new query();
+
 ?>
-<!-- header end  -->
-<!-- wrapper  -->
 <div id="wrapper">
-    <!-- dashbard-menu-wrap -->
     <div class="dashbard-menu-overlay"></div>
-    <div class="dashbard-menu-wrap">
-        <div class="dashbard-menu-close"><i class="fal fa-times"></i></div>
-        <div class="dashbard-menu-container">
-            <!-- user-profile-menu-->
-            <div class="user-profile-menu">
-                <h3>Main</h3>
-                <ul class="no-list-style">
-                    <li><a href="dashboard.html"><i class="fal fa-chart-line"></i>Dashboard</a></li>
-                    <li><a href="dashboard-myprofile.html"><i class="fal fa-user-edit"></i> Edit profile</a></li>
-                    <li><a href="dashboard-messages.html"><i class="fal fa-envelope"></i> Messages <span>3</span></a></li>
-                    <li><a href="dashboard-agents.html"><i class="fal fa-users"></i> Agents List</a></li>
-                    <li>
-                        <a href="#" class="submenu-link"><i class="fal fa-plus"></i>Submenu</a>
-                        <ul class="no-list-style">
-                            <li><a href="#"><i class="fal fa-th-list"></i> Submenu 2 </a></li>
-                            <li><a href="#"> <i class="fal fa-calendar-check"></i> Submenu 2</a></li>
-                            <li><a href="#"><i class="fal fa-comments-alt"></i>Submenu 2</a></li>
-                            <li><a href="#"><i class="fal fa-file-plus"></i> Submenu 2</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-            <!-- user-profile-menu end-->
-            <!-- user-profile-menu-->
-            <div class="user-profile-menu">
-                <h3>Listings</h3>
-                <ul class="no-list-style">
-                    <li><a href="dashboard-listing-table.html"><i class="fal fa-th-list"></i> My listigs </a></li>
-                    <li><a href="dashboard-bookings.html"> <i class="fal fa-calendar-check"></i> Bookings <span>3</span></a></li>
-                    <li><a href="dashboard-review.html"><i class="fal fa-comments-alt"></i> Reviews <span>2</span> </a></li>
-                    <li><a href="dashboard-add-listing.html" class="user-profile-act"><i class="fal fa-file-plus"></i> Add New</a></li>
-                </ul>
-            </div>
-            <!-- user-profile-menu end-->
-        </div>
-        <div class="dashbard-menu-footer">© Homeradar 2022 . All rights reserved.</div>
-    </div>
-    <!-- dashbard-menu-wrap end  -->
+    <?php include("inc/sidebar.php"); ?>
+
     <!-- content -->
     <div class="dashboard-content">
         <div class="dashboard-menu-btn color-bg"><span><i class="fas fa-bars"></i></span>Dasboard Menu</div>
@@ -54,7 +16,7 @@ $action = new query();
                 <div class="dashbard-menu-header">
                     <div class="dashbard-menu-avatar fl-wrap">
                         <img src="images/avatar/1.jpg" alt="">
-                        <h4>Welcome, <span>Alica Noory</span></h4>
+                        <h4>Welcome, <span><?php echo $user_info['first_name']; ?></span></h4>
                     </div>
                     <a href="index.html" class="log-out-btn   tolt" data-microtip-position="bottom" data-tooltip="Log Out"><i class="far fa-power-off"></i></a>
                 </div>
@@ -436,7 +398,7 @@ $action = new query();
                     </div>
                     <!-- dasboard-widget-box  end-->
 
-                    <a onclick="addListing();" class="btn  color-bg float-btn">Save Changes </a>
+                    <a class="btn  color-bg float-btn" id="pub-listing">Save Changes </a>
             </div>
             </form>
         </div>
@@ -472,34 +434,7 @@ $action = new query();
 <script src="js/map-add.js"></script>
 <script src="js/dashboard.js"></script>
 <script>
-    function addListing() {
-        var formData = $("#listing_form").submit(function(e) {
-            e.preventDefault();
-            return;
-        });
 
-        var formData = new FormData(formData[0]);
-
-        $.ajax({
-            url: $("#listing_form").attr("action"),
-            type: "POST",
-
-            data: formData,
-            success: function(response) {
-                res = jQuery.parseJSON(response);
-                console.log(res);
-                if (res.status == 1) {
-                    if (res.type == "listing") {
-                        window.location.href = 'dashboard-add-listing.php?id=' + res.listing_id + "?msg=Listing added successfully";
-                    }
-                }
-            },
-            contentType: false,
-            processData: false,
-            cache: false,
-        });
-        return false;
-    }
 </script>
 </body>
 
